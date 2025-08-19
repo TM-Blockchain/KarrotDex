@@ -1,0 +1,6 @@
+/karrot-mint-bot
+├── .env
+├── karrot-mint-listener.js
+├── abi/
+│   ├── KarrotEscrow.json
+│   └── pxAssetMinter.json
