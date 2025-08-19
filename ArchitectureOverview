@@ -1,0 +1,13 @@
+[ANY CHAIN USER]
+   ↓
+Submit zk/multisig lockproof → KarrotEscrow
+   ↓ emits →
+   🔁 AssetLocked event
+   ↓
+Listener or relay mints `pxAsset` on PulseChain
+   ↓
+User swaps pxAsset on KarrotDEX Aggregator
+   ↓
+Price oracle fetches consensus price from MeshOracle
+   ↓
+When user wants to unlock → burns pxAsset → KarrotEscrow → SourceChain release
