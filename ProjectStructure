@@ -1,0 +1,16 @@
+karrot-hardhat/
+├── contracts/
+│   ├── KarrotMeshOracle.sol
+│   ├── KarrotEscrow.sol
+│   ├── pxAsset.sol
+│   ├── pxAssetMinter.sol
+│   ├── KarrotStabilizationVault.sol
+│
+├── scripts/
+│   ├── deploy.js
+│
+├── test/
+│   ├── karrot.test.js
+│
+├── hardhat.config.js
+├── package.json
