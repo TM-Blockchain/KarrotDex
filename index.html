@@ -13,5 +13,24 @@
   <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
   <script src="karrot-logic.js"></script>
   <script src="voice-pack.js"></script>
-</body>
+
+  <div class="max-w-xl w-full space-y-3 mt-8">
+  <input id="tokenIn"  placeholder="tokenIn address"  class="w-full p-2 rounded bg-gray-800 text-white" />
+  <input id="tokenOut" placeholder="tokenOut address" class="w-full p-2 rounded bg-gray-800 text-white" />
+  <input id="amountIn" placeholder="amountIn (wei)"    class="w-full p-2 rounded bg-gray-800 text-white" />
+  <input id="minOut"   placeholder="minOut (wei)"      class="w-full p-2 rounded bg-gray-800 text-white" />
+  <input id="targetChain" placeholder="Thor target chain (e.g., BTC)" class="w-full p-2 rounded bg-gray-800 text-white" />
+
+  <div class="grid grid-cols-2 gap-3">
+    <button id="btnSwapPulsex"  class="px-4 py-2 bg-purple-600 rounded">Swap PulseX</button>
+    <button id="btnSwap9mm"     class="px-4 py-2 bg-purple-600 rounded">Swap 9mm</button>
+    <button id="btnSwapPancake" class="px-4 py-2 bg-purple-600 rounded">Swap Pancake</button>
+    <button id="btnSwapUniV3"   class="px-4 py-2 bg-purple-600 rounded">Swap Uniswap V3</button>
+    <button id="btnThor"        class="col-span-2 px-4 py-2 bg-red-600 rounded">ThorSwap (relay)</button>
+  </div>
+</div>
+
+<!-- Scripts at bottom -->
+<script type="module" src="shrine-bind.js"></script>
+<script type="module" src="oracle-echo.js"></script></body>
 </html>
