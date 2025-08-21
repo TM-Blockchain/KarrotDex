@@ -1,4 +1,4 @@
-// karrotdex.js
+// karrot-logic.js
 
 window.addEventListener('load', async () => {
   if (typeof window.ethereum !== 'undefined') {
