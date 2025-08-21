@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🥕 KarrotDex</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #0a0a0a;
+    }
+    .ember-bg {
+      background: url('img/ember-particles.gif') no-repeat center center fixed;
+      background-size: cover;
+      mix-blend-mode: screen;
+      opacity: 0.4;
+      z-index: -2;
+    }
+    .scroll-overlay {
+      background: url('img/stake-karrot-bg.png') no-repeat center center;
+      background-size: contain;
+      opacity: 0.07;
+      position: absolute;
+      top: 80px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="text-white ember-bg relative min-h-screen">
+  <div class="scroll-overlay"></div>
+
+  <!-- Header -->
+  <header class="flex justify-between items-center px-6 py-4 bg-black bg-opacity-70">
+    <h1 class="text-4xl font-bold text-orange-400 flex items-center gap-2">
+      🥕 <span>KarrotDex</span>
+    </h1>
+    <button id="connectWallet" class="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded text-sm">Connect Wallet</button>
+  </header>
+
+  <!-- Main Swap Panel -->
+  <main class="flex flex-col items-center justify-center py-10 px-4">
+    <div class="bg-gray-900 bg-opacity-80 rounded-xl shadow-xl p-6 w-full max-w-lg space-y-6">
+      <!-- FROM -->
+      <div>
+        <label class="block mb-1 text-sm">From</label>
+        <div class="flex items-center bg-gray-800 rounded p-2 space-x-2">
+          <img src="img/tokens/eth.png" class="w-6 h-6" id="fromIcon">
+          <select id="tokenFrom" class="bg-transparent text-white outline-none flex-1">
+            <option value="ETH">ETH</option>
+            <option value="USDC">USDC</option>
+            <option value="XSTOCK1">XStock #1</option>
+          </select>
+          <span id="balanceFrom" class="text-xs text-gray-400">0.00</span>
+        </div>
+        <input id="amountFrom" type="number" placeholder="Amount" class="mt-2 w-full p-2 rounded bg-gray-800 text-white" />
+      </div>
+
+      <!-- TO -->
+      <div>
+        <label class="block mb-1 text-sm">To</label>
+        <div class="flex items-center bg-gray-800 rounded p-2 space-x-2">
+          <img src="img/tokens/usdc.png" class="w-6 h-6" id="toIcon">
+          <select id="tokenTo" class="bg-transparent text-white outline-none flex-1">
+            <option value="USDC">USDC</option>
+            <option value="ETH">ETH</option>
+            <option value="XSTOCK2">XStock #2</option>
+          </select>
+          <span id="balanceTo" class="text-xs text-gray-400">0.00</span>
+        </div>
+        <input id="amountTo" type="text" readonly placeholder="Estimated Output" class="mt-2 w-full p-2 rounded bg-gray-700 text-gray-400" />
+      </div>
+
+      <!-- SWAP -->
+      <button id="btnSwap" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 rounded font-bold text-lg">Swap</button>
+    </div>
+
+    <!-- Logo -->
+    <img src="img/karrot-hex.jpg" class="mt-10 w-24 opacity-80" alt="Karrot Logo">
+  </main>
+
+  <!-- Tabs -->
+  <footer class="mt-10 text-center space-x-6 text-sm text-gray-400">
+    <a href="#" class="hover:text-orange-300">Swap</a>
+    <a href="#" class="hover:text-orange-300">Liquidity</a>
+    <a href="#" class="hover:text-orange-300">Limit Orders</a>
+    <a href="#" class="hover:text-orange-300">Bridge</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+  <script src="karrot-logic.js"></script>
+</body>
+</html>
