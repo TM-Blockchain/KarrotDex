@@ -328,9 +328,10 @@ aggregatorSelect.value = "PulseX";
 populateTokensForAggregator("PulseX");
 
 const DEFAULTS = {
-  from: "0x6b175474e89094c44da98b954eedeac495271d0f", // DAI
-  to: "0x6910076eee8f4b6ea251b7cca1052dd744fc04da"   // KARROT
-};
+  if (DEFAULTS["PulseX"]) {
+  tf.value = DEFAULTS["PulseX"].from.toLowerCase();
+  tt.value = DEFAULTS["PulseX"].to.toLowerCase();
+}
 
 tf.value = DEFAULTS.from.toLowerCase();
 tt.value = DEFAULTS.to.toLowerCase();
