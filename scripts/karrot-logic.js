@@ -52,6 +52,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const KARROT = "0x6910076eee8f4b6ea251b7cca1052dd744fc04da";
   tf.value = DAI;
   tt.value = KARROT;
+
+  // Explicitly trigger change to ensure proper rendering
+  tf.dispatchEvent(new Event('change'));
+  tt.dispatchEvent(new Event('change'));
   updateAllIcons();
 
   tf.addEventListener("change", () => {
