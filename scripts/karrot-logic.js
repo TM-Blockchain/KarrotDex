@@ -38,6 +38,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     logo: "img/default-token.png"
   };
 }
+function updateIcon(sel, img) {
+  const val = sel.value.toLowerCase();
+  const meta = getTokenMeta(val);
+  img.src = meta.logo || "img/default-token.png";
+}
 
   function updateAllIcons() {
     updateIcon(tf, fromIcon);
