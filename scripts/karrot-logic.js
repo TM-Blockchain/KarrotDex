@@ -5,6 +5,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   const tt = document.getElementById("tokenTo");
   const fromIcon = document.getElementById("fromIcon");
   const toIcon = document.getElementById("toIcon");
+  // ✅ Set default aggregator to PulseX after all necessary functions are defined
+selectedAggregator = "PulseX";
+aggregatorSelect.value = "PulseX";
+populateTokensForAggregator("PulseX");
+
+if (DEFAULTS["PulseX"]) {
+  tf.value = DEFAULTS["PulseX"].from.toLowerCase();
+  tt.value = DEFAULTS["PulseX"].to.toLowerCase();
+}
+
+tf.dispatchEvent(new Event("change"));
+tt.dispatchEvent(new Event("change"));
+updateAllIcons();
+
   const checkbox = document.getElementById("useCustomAddress");
   const customAddressInput = document.getElementById("customAddress");
   const swapBtn = document.getElementById("btnSwap");
