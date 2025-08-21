@@ -233,9 +233,24 @@ function updateIcon(sel, img) {
       { address: "0xXStockToken1", label: "XStockToken1", logo: "img/thorswap1.png" }
       // Add more ThorSwap tokens
     ]
-  };
+  }; 
 
-  // Helper function to populate tokens dropdown based on selected aggregator
+  const DEFAULTS = {
+  PulseX: {
+    from: "0x6b175474e89094c44da98b954eedeac495271d0f",
+    to: "0x6910076eee8f4b6ea251b7cca1052dd744fc04da"
+  },
+  Ray: {
+    from: "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
+    to: "0x4fabb145d64652a948d72533023f6e7a623c7c53"
+  },
+  Liberty: {
+    from: "0x1111111111111111111111111111111111111111",
+    to: "0x2222222222222222222222222222222222222222"
+  }
+  // Add more aggregators and defaults as needed
+};
+// Helper function to populate tokens dropdown based on selected aggregator
   function populateTokensForAggregator(aggregator) {
   console.log("populateTokensForAggregator called for:", aggregator); // ✅ Log
 
