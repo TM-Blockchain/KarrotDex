@@ -133,9 +133,6 @@ function updateIcon(sel, img) {
     console.log("[LIBERTY] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
     // Implement actual Liberty swap logic here
   }
-      
-    }
-  }
 
   swapBtn.addEventListener("click", async () => {
     const tokenIn = tf.value;
