@@ -91,6 +91,7 @@ function updateIcon(sel, img) {
     console.log(`Executing swap via ${selectedAggregator}`);
     await executeSwap(tokenIn, tokenOut, amt, userAddr);
     alert("Swap successful!");
+    document.getElementById("amountFrom").value = "";
   } catch (err) {
     console.error("Swap failed:", err);
     alert("Swap failed. See console.");
