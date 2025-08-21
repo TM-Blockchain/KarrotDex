@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function updateIcon(sel, img) {
     const val = sel.value.toLowerCase();
-    const tokenOption = sel.querySelector(`option[value="${val}"]`);
-    const dynamicLogo = tokenOption ? tokenOption.dataset.logo : null;
-    img.src = tokenLogos[val] || dynamicLogo || "img/default-token.png";
+const meta = getTokenMeta(val);
+img.src = meta.logo || "img/default-token.png";
+
   }
 
   function updateAllIcons() {
