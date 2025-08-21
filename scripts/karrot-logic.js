@@ -29,14 +29,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function updateIcon(sel, img) {
   const val = sel.value.toLowerCase();
-  function getTokenMeta(address) {
-  return {
-    logo: tokenLogos[address] || "img/default-token.png",
-    label: labelMap[address] || address
+  const meta = {
+    logo: tokenLogos[val] || "img/default-token.png",
+    label: labelMap[val] || val
   };
-}
-
-  img.src = meta.logo || "img/default-token.png";
+  img.src = meta.logo;
 }
 
   const tokens = Object.keys(tokenLogos);
