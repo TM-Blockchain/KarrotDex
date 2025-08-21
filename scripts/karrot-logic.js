@@ -299,9 +299,13 @@ aggregatorSelect.value = "PulseX";
 // Populate tokens based on PulseX aggregator
 populateTokensForAggregator("PulseX");
 
-// Set default token values: DAI (pDAI) and KARROT
-tf.value = "0x6b175474e89094c44da98b954eedeac495271d0f".toLowerCase(); // DAI
-tt.value = "0x6910076eee8f4b6ea251b7cca1052dd744fc04da".toLowerCase(); // KARROT
+const DEFAULTS = {
+  from: "0x6b175474e89094c44da98b954eedeac495271d0f", // DAI
+  to: "0x6910076eee8f4b6ea251b7cca1052dd744fc04da"   // KARROT
+};
+
+tf.value = DEFAULTS.from.toLowerCase();
+tt.value = DEFAULTS.to.toLowerCase();
 
 // Trigger icon updates and any UI change reactions
 tf.dispatchEvent(new Event("change"));
