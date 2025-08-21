@@ -1,0 +1,13 @@
+const savedAggregator = localStorage.getItem("selectedAggregator");
+if (savedAggregator && aggregatorTokens[savedAggregator]) {
+  selectedAggregator = savedAggregator;
+  aggregatorSelect.value = savedAggregator;
+  populateTokensForAggregator(savedAggregator);
+}
+
+aggregatorSelect.addEventListener("change", (e) => {
+  const agg = e.target.value;
+  selectedAggregator = agg;
+  localStorage.setItem("selectedAggregator", agg);
+  populateTokensForAggregator(agg);
+});
