@@ -148,22 +148,7 @@ function updateIcon(sel, img) {
     console.log("[LIBERTY] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
     // Implement actual Liberty swap logic here
   }
-    const tokenIn = tf.value;
-    const tokenOut = tt.value;
-    const amt = document.getElementById("amountFrom").value;
-    const userAddr = checkbox.checked ? document.getElementById("customAddress").value : account;
-
-    if (!amt || isNaN(amt) || Number(amt) <= 0) {
-      return alert("Enter a valid amount");
-    }
-
-    try {
-      console.log(`Executing swap via ${selectedAggregator}`);
-      await executeSwap(tokenIn, tokenOut, amt, userAddr);
-    } catch (err) {
-      console.error("Swap failed:", err);
-      alert("Swap failed. See console.");
-    }
+    
   });
 
     // *************** ADDITIONS START HERE ***************
