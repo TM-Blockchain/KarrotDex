@@ -83,19 +83,7 @@ function updateIcon(sel, img) {
   const spinner = document.getElementById("swapSpinner");
 
   // 👇 Show loading state
-  swapBtn.disabled = true;
-  btnText.textContent = "Swapping...";
-  spinner.classList.remove("hidden");
-
-  try {
-    console.log(`Executing swap via ${selectedAggregator}`);
-    await executeSwap(tokenIn, tokenOut, amt, userAddr);
-    alert("Swap successful!");
-    document.getElementById("amountFrom").value = "";
-  } catch (err) {
-    console.error("Swap failed:", err);
-    alert("Swap failed. See console.");
-  } finally {
+   finally {
     // 👇 Reset UI state
     swapBtn.disabled = false;
     btnText.textContent = "Swap";
