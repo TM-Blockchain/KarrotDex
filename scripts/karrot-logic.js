@@ -68,14 +68,40 @@ function updateIcon(sel, img) {
   });
 
   if (switchBtn) {
-    switchBtn.addEventListener("click", () => {
-      const temp = tf.value;
-      tf.value = tt.value;
-      tt.value = temp;
-      tf.dispatchEvent(new Event("change"));
-      tt.dispatchEvent(new Event("change"));
-    });
+    swapBtn.addEventListener("click", async () => {
+  const tokenIn = tf.value;
+  const tokenOut = tt.value;
+  const amt = document.getElementById("amountFrom").value;
+  const userAddr = checkbox.checked ? document.getElementById("customAddress").value : account;
+
+  if (!amt || isNaN(amt) || Number(amt) <= 0) {
+    return alert("Enter a valid amount");
   }
+
+  // 👇 UI elements
+  const btnText = document.getElementById("swapBtnText");
+  const spinner = document.getElementById("swapSpinner");
+
+  // 👇 Show loading state
+  swapBtn.disabled = true;
+  btnText.textContent = "Swapping...";
+  spinner.classList.remove("hidden");
+
+  try {
+    console.log(`Executing swap via ${selectedAggregator}`);
+    await executeSwap(tokenIn, tokenOut, amt, userAddr);
+    alert("Swap successful!");
+  } catch (err) {
+    console.error("Swap failed:", err);
+    alert("Swap failed. See console.");
+  } finally {
+    // 👇 Reset UI state
+    swapBtn.disabled = false;
+    btnText.textContent = "Swap";
+    spinner.classList.add("hidden");
+  }
+});
+
 
   if (checkbox && customAddressInput) {
     checkbox.addEventListener("change", () => {
