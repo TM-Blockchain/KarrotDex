@@ -15,7 +15,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     "0x6b175474e89094c44da98b954eedeac495271d0f": "https://assets.coingecko.com/coins/images/9956/thumb/4943.png", // DAI
     "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png", // USDC
     "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643": "https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png?v=024", // MXDAI
-    "0x4fabb145d64652a948d72533023f6e7a623c7c53": "https://cryptologos.cc/logos/binance-usd-busd-logo.png?v=024" // BUSD
+    "0x4fabb145d64652a948d72533023f6e7a623c7c53": "https://cryptologos.cc/logos/binance-usd-busd-logo.png?v=024"  // BUSD
+  };
+
+  const labelMap = {
+    "0x6910076eee8f4b6ea251b7cca1052dd744fc04da": "KARROT",
+    "0x6b175474e89094c44da98b954eedeac495271d0f": "DAI",
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "USDC",
+    "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643": "MXDAI",
+    "0x4fabb145d64652a948d72533023f6e7a623c7c53": "BUSD"
   };
 
   function updateIcon(sel, img) {
@@ -30,32 +38,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateIcon(tt, toIcon);
   }
 
-  const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f";
-  const KARROT = "0x6910076eee8f4b6ea251b7cca1052dd744fc04da";
-  const USDC = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
-  const MXDAI = "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643";
-  const BUSD = "0x4fabb145d64652a948d72533023f6e7a623c7c53";
+  const tokens = Object.keys(tokenLogos);
 
-  // FROM options
-  [KARROT, DAI, USDC, MXDAI, BUSD].forEach(addr => {
-    const option = document.createElement("option");
-    option.value = addr;
-    option.textContent = Object.entries(tokenLogos).find(([k]) => k.toLowerCase() === addr.toLowerCase())[0] === addr ? addr : addr;
-    option.dataset.logo = tokenLogos[addr];
-    tf.appendChild(option);
-  });
+  // Populate FROM and TO dropdowns
+  function populateSelect(selectEl, order) {
+    order.forEach(addr => {
+      const option = document.createElement("option");
+      option.value = addr;
+      option.textContent = labelMap[addr] || addr;
+      option.dataset.logo = tokenLogos[addr];
+      selectEl.appendChild(option);
+    });
+  }
 
-  // TO options
-  [KARROT, MXDAI, BUSD, DAI, USDC].forEach(addr => {
-    const option = document.createElement("option");
-    option.value = addr;
-    option.textContent = Object.entries(tokenLogos).find(([k]) => k.toLowerCase() === addr.toLowerCase())[0] === addr ? addr : addr;
-    option.dataset.logo = tokenLogos[addr];
-    tt.appendChild(option);
-  });
+  populateSelect(tf, tokens);
+  populateSelect(tt, [tokens[0], tokens[3], tokens[4], tokens[1], tokens[2]]); // Custom TO order
 
-  tf.value = DAI;
-  tt.value = KARROT;
+  tf.value = tokens[1]; // DAI default
+  tt.value = tokens[0]; // KARROT default
 
   tf.dispatchEvent(new Event("change"));
   tt.dispatchEvent(new Event("change"));
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  const AGG = "0xYourKarrotAggregator";
+  const AGG = "0xYourKarrotAggregator"; // Update with actual aggregator address
   const karrotABI = [
     {
       constant: true,
@@ -123,8 +123,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const karrot = new ethers.Contract(AGG, karrotABI, signer);
 
-  // Aggregator Selector
-  let selectedAggregator = "ZK"; // default
+  // Aggregator control
+  let selectedAggregator = "ZK";
 
   window.setAggregator = (agg) => {
     selectedAggregator = agg;
@@ -133,17 +133,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function swapRay(tokenIn, tokenOut, amount, userAddr) {
     console.log("[RAY] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
-    // implement actual call to Ray protocol
+    // Implement actual Ray swap logic here
   }
 
   async function swapZK(tokenIn, tokenOut, amount, userAddr) {
     console.log("[ZK] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
-    // implement ZK swap logic here
+    // Implement actual ZK swap logic here
   }
 
   async function swapLiberty(tokenIn, tokenOut, amount, userAddr) {
     console.log("[LIBERTY] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
-    // implement Liberty protocol swap logic
+    // Implement actual Liberty swap logic here
   }
 
   async function executeSwap(tokenIn, tokenOut, amount, userAddr) {
@@ -167,10 +167,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userAddr = checkbox.checked ? document.getElementById("customAddress").value : account;
 
     if (!amt || isNaN(amt) || Number(amt) <= 0) {
-      return alert("Enter valid amount");
+      return alert("Enter a valid amount");
     }
 
     try {
+      console.log(`Executing swap via ${selectedAggregator}`);
       await executeSwap(tokenIn, tokenOut, amt, userAddr);
     } catch (err) {
       console.error("Swap failed:", err);
