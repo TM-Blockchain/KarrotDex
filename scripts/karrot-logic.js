@@ -141,8 +141,6 @@ function updateIcon(sel, img) {
     console.log("[LIBERTY] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
     // Implement actual Liberty swap logic here
   }
-
-  async function executeSwap(tokenIn, tokenOut, amount, userAddr) {
     switch (selectedAggregator) {
       case "ZK":
         return swapZK(tokenIn, tokenOut, amount, userAddr);
