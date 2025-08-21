@@ -52,9 +52,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  populateSelect(tf, tokens);
-  populateSelect(tt, [tokens[0], tokens[3], tokens[4], tokens[1], tokens[2]]); // Custom TO order
-
   tf.value = tokens[1]; // DAI default
   tt.value = tokens[0]; // KARROT default
 
