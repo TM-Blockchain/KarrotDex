@@ -13,9 +13,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const swapBtn = document.getElementById("btnSwap");
   const switchBtn = document.getElementById("switchTokens");
   const aggregatorSelect = document.getElementById("aggregator");
+  populateTokensForAggregator(selectedAggregator);
 
-  // Your remaining logic...
-  let selectedAggregator = "PulseX"; // Declare only once, globally
 
 });
 
