@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     "0x6910076eee8f4b6ea251b7cca1052dd744fc04da": "img/karrot-hex.jpg", // KARROT
     "0x6b175474e89094c44da98b954eedeac495271d0f": "https://assets.coingecko.com/coins/images/9956/thumb/4943.png", // DAI
     "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png", // USDC
+    "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643": "https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png?v=024", // MXDAI (example)
+    "0x4fabb145d64652a948d72533023f6e7a623c7c53": "https://cryptologos.cc/logos/binance-usd-busd-logo.png?v=024"  // BUSD (example)
   };
 
   function updateIcon(sel, img) {
@@ -51,13 +53,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Add defaults
+  // Add default tokens to From dropdown
   const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f";
   const KARROT = "0x6910076eee8f4b6ea251b7cca1052dd744fc04da";
+  const USDC = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+  const MXDAI = "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643";
+  const BUSD = "0x4fabb145d64652a948d72533023f6e7a623c7c53";
+
+  // From dropdown options
+  [
+    { addr: KARROT, label: "KARROT", logo: tokenLogos[KARROT] },
+    { addr: DAI, label: "DAI", logo: tokenLogos[DAI] },
+    { addr: USDC, label: "USDC", logo: tokenLogos[USDC] },
+    { addr: MXDAI, label: "MXDAI", logo: tokenLogos[MXDAI] },
+    { addr: BUSD, label: "BUSD", logo: tokenLogos[BUSD] },
+  ].forEach(({ addr, label, logo }) => {
+    const option = document.createElement("option");
+    option.value = addr;
+    option.textContent = label;
+    option.dataset.logo = logo;
+    tf.appendChild(option);
+  });
+
+  // To dropdown options - but rename one DAI and USDC for clarity
+  [
+    { addr: KARROT, label: "KARROT", logo: tokenLogos[KARROT] },
+    { addr: DAI, label: "MXDAI", logo: tokenLogos[DAI] },  // renamed
+    { addr: USDC, label: "BUSD", logo: tokenLogos[USDC] }, // renamed
+    { addr: MXDAI, label: "DAI", logo: tokenLogos[MXDAI] }, // renamed
+    { addr: BUSD, label: "USDC", logo: tokenLogos[BUSD] },  // renamed
+  ].forEach(({ addr, label, logo }) => {
+    const option = document.createElement("option");
+    option.value = addr;
+    option.textContent = label;
+    option.dataset.logo = logo;
+    tt.appendChild(option);
+  });
+
   tf.value = DAI;
   tt.value = KARROT;
 
-  // Force proper loading and rendering of logos
   tf.dispatchEvent(new Event("change"));
   tt.dispatchEvent(new Event("change"));
   updateAllIcons();
@@ -80,14 +115,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Custom address toggle
   if (checkbox && customAddressInput) {
     checkbox.addEventListener("change", () => {
       customAddressInput.classList.toggle("hidden", !checkbox.checked);
     });
   }
 
-  // Advanced swap handler placeholders
   const AGG = "0xYourKarrotAggregator"; // Replace with your aggregator address
   const karrotABI = [
     {
