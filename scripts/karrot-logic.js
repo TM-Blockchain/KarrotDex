@@ -306,8 +306,6 @@ function updateAllIcons() {
   updateIcon(tf, fromIcon);
   updateIcon(tt, toIcon);
 }
-
-// Set default aggregator to PulseX
 // Set default aggregator to PulseX
 selectedAggregator = "PulseX";
 aggregatorSelect.value = "PulseX";
