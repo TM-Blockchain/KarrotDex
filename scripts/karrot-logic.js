@@ -25,7 +25,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateIcon(tt, toIcon);
   }
 
-  // Load tokens from CoinGecko
+  // Add option helper
+  const addOption = (address, symbol, logo) => {
+    const opt1 = document.createElement("option");
+    opt1.value = address;
+    opt1.textContent = symbol;
+    opt1.dataset.logo = logo;
+    tf.appendChild(opt1);
+
+    const opt2 = opt1.cloneNode(true);
+    tt.appendChild(opt2);
+  };
+
+  // Add hardcoded KARROT
+  const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f";
+  const KARROT = "0x6910076eee8f4b6ea251b7cca1052dd744fc04da";
+
+  addOption(KARROT, "KARROT", tokenLogos[KARROT]);
+
+  // Add dynamic tokens from CoinGecko
   const wanted = ["dai", "usd-coin", "tether", "weth", "wrapped-bitcoin"];
   for (const id of wanted) {
     try {
@@ -34,30 +52,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (addr) {
         const sym = d.symbol.toUpperCase();
         const logo = d.image.thumb;
-        const o1 = document.createElement("option");
-        o1.value = addr;
-        o1.textContent = sym;
-        o1.dataset.logo = logo;
-        tf.appendChild(o1);
-        const o2 = o1.cloneNode(true);
-        tt.appendChild(o2);
+        addOption(addr, sym, logo);
       }
     } catch (e) {
       console.warn("Failed:", id, e);
     }
   }
 
-  // Add defaults
-  const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f";
-  const KARROT = "0x6910076eee8f4b6ea251b7cca1052dd744fc04da";
+  // Set default selections
   tf.value = DAI;
   tt.value = KARROT;
 
-  // Explicitly trigger change to ensure proper rendering
+  // Ensure rendering
   tf.dispatchEvent(new Event('change'));
   tt.dispatchEvent(new Event('change'));
   updateAllIcons();
 
+  // Handle token changes
   tf.addEventListener("change", () => {
     updateIcon(tf, fromIcon);
     if (tf.value === tt.value) {
@@ -86,17 +97,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Advanced swap handler placeholders
   const AGG = "0xYourKarrotAggregator"; // replace with your aggregator
   const karrotABI = [
-    { constant: true, inputs: [], name: "totalSupply", outputs: [{ name: "", type: "uint256" }], type: "function" }
+    {
+      constant: true,
+      inputs: [],
+      name: "totalSupply",
+      outputs: [{ name: "", type: "uint256" }],
+      type: "function"
+    }
   ];
 
   const { ethers } = window;
   let provider, signer, account;
+
   if (window.ethereum) {
     provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     signer = provider.getSigner();
     account = await signer.getAddress();
-    document.getElementById("connectWallet").innerText = `🟢 ${account.slice(0,6)}...${account.slice(-4)}`;
+    document.getElementById("connectWallet").innerText = `🟢 ${account.slice(0, 6)}...${account.slice(-4)}`;
   } else {
     alert("Please install MetaMask!");
     swapBtn.disabled = true;
@@ -104,16 +122,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const karrot = new ethers.Contract(AGG, karrotABI, signer);
 
+  // Swap logic placeholders
   async function swapRay() {
-    /* implement ray swap logic */
+    // implement ray swap logic
   }
 
   async function swapZK() {
-    /* zk swap logic */
+    // zk swap logic
   }
 
   async function swapLiberty() {
-    /* liberty swap logic */
+    // liberty swap logic
   }
 
   swapBtn.addEventListener("click", () => {
@@ -128,10 +147,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("Swapping:", amt, tokenIn, "→", tokenOut, "to:", custom);
     alert(`Swap ${amt} from ${tokenIn} to ${tokenOut}`);
 
-    // choose appropriate handler:
+    // Example handler (uncomment as needed):
     // swapRay();
     // swapZK();
     // swapLiberty();
   });
-
 });
