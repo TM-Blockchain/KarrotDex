@@ -287,11 +287,24 @@ function updateIcon(sel, img) {
 }
   // On aggregator change, update tokens list accordingly
   aggregatorSelect.addEventListener("change", (e) => {
-    const agg = e.target.value;
-    selectedAggregator = agg;
-    console.log(`Switched aggregator to: ${agg}`);
-    populateTokensForAggregator(agg);
-  });
+  const agg = e.target.value;
+  selectedAggregator = agg;
+  console.log(`Switched aggregator to: ${agg}`);
+  populateTokensForAggregator(agg);
+
+  // Apply new default token values if available
+  if (DEFAULTS[agg]) {
+    tf.value = DEFAULTS[agg].from.toLowerCase();
+    tt.value = DEFAULTS[agg].to.toLowerCase();
+  } else {
+    tf.selectedIndex = 0;
+    tt.selectedIndex = 1;
+  }
+
+  tf.dispatchEvent(new Event("change"));
+  tt.dispatchEvent(new Event("change"));
+});
+
   function populateSelectWithLabels(selectEl, addresses) {
   addresses.forEach(addr => {
     const option = document.createElement("option");
