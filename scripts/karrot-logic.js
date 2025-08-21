@@ -27,12 +27,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     "0x4fabb145d64652a948d72533023f6e7a623c7c53": "BUSD"
   };
 
-  function updateIcon(sel, img) {
-    const val = sel.value.toLowerCase();
-const meta = getTokenMeta(val);
-img.src = meta.logo || "img/default-token.png";
-
+  function getTokenMeta(address) {
+  const lowerAddr = address.toLowerCase();
+  for (const agg in aggregatorTokens) {
+    const token = aggregatorTokens[agg].find(t => t.address.toLowerCase() === lowerAddr);
+    if (token) return token;
   }
+  return {
+    label: "UNKNOWN",
+    logo: "img/default-token.png"
+  };
+}
 
   function updateAllIcons() {
     updateIcon(tf, fromIcon);
