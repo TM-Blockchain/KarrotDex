@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         o1.dataset.logo = logo;
         tf.appendChild(o1);
         const o2 = o1.cloneNode(true);
-        tf.appendChild; // margin
         tt.appendChild(o2);
       }
     } catch (e) {
@@ -63,6 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateIcon(tt, toIcon);
     }
   });
+
   tt.addEventListener("change", () => {
     updateIcon(tt, toIcon);
     if (tt.value === tf.value) {
@@ -103,9 +103,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function swapRay() {
     /* implement ray swap logic */
   }
+
   async function swapZK() {
     /* zk swap logic */
   }
+
   async function swapLiberty() {
     /* liberty swap logic */
   }
@@ -114,13 +116,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tokenIn = tf.value, tokenOut = tt.value;
     const amt = document.getElementById("amountFrom").value;
     const custom = checkbox.checked ? document.getElementById("customAddress").value : account;
+
     if (!amt || isNaN(amt) || Number(amt) <= 0) {
       return alert("Enter valid amount");
     }
+
     console.log("Swapping:", amt, tokenIn, "→", tokenOut, "to:", custom);
     alert(`Swap ${amt} from ${tokenIn} to ${tokenOut}`);
+
     // choose appropriate handler:
     // swapRay();
+    // swapZK();
+    // swapLiberty();
   });
 
 });
