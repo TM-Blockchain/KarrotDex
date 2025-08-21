@@ -44,11 +44,6 @@ function updateIcon(sel, img) {
   img.src = meta.logo || "img/default-token.png";
 }
 
-  function updateAllIcons() {
-    updateIcon(tf, fromIcon);
-    updateIcon(tt, toIcon);
-  }
-
   const tokens = Object.keys(tokenLogos);
 
   // Populate FROM and TO dropdowns
