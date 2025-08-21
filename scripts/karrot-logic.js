@@ -239,6 +239,17 @@ img.src = meta.logo || "img/default-token.png";
 
   // Helper function to populate tokens dropdown based on selected aggregator
   function populateTokensForAggregator(aggregator) {
+  console.log("populateTokensForAggregator called for:", aggregator); // ✅ ADD THIS
+  const tokenList = aggregatorTokens[aggregator];
+  if (!tokenList) {
+    console.warn("No tokens for:", aggregator); // ✅ ADD THIS
+    return;
+  }
+
+  // Clear existing options
+  tf.innerHTML = "";
+  tt.innerHTML = "";
+
     const tokenList = aggregatorTokens[aggregator];
     if (!tokenList) return;
 
