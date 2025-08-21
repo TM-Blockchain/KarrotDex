@@ -52,13 +52,6 @@ img.src = meta.logo || "img/default-token.png";
     });
   }
 
-  tf.value = tokens[1]; // DAI default
-  tt.value = tokens[0]; // KARROT default
-
-  tf.dispatchEvent(new Event("change"));
-  tt.dispatchEvent(new Event("change"));
-  updateAllIcons();
-
   tf.addEventListener("change", () => {
     updateIcon(tf, fromIcon);
     if (tf.value === tt.value) {
