@@ -321,19 +321,16 @@ function updateAllIcons() {
 }
 
 // Set default aggregator to PulseX
+// Set default aggregator to PulseX
 selectedAggregator = "PulseX";
 aggregatorSelect.value = "PulseX";
-
-// Populate tokens based on PulseX aggregator
 populateTokensForAggregator("PulseX");
 
-const DEFAULTS = {
-  if (DEFAULTS["PulseX"]) {
+if (DEFAULTS["PulseX"]) {
   tf.value = DEFAULTS["PulseX"].from.toLowerCase();
   tt.value = DEFAULTS["PulseX"].to.toLowerCase();
 }
 
-// Trigger icon updates and any UI change reactions
 tf.dispatchEvent(new Event("change"));
 tt.dispatchEvent(new Event("change"));
 updateAllIcons();
