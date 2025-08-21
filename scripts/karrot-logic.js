@@ -333,9 +333,6 @@ const DEFAULTS = {
   tt.value = DEFAULTS["PulseX"].to.toLowerCase();
 }
 
-tf.value = DEFAULTS.from.toLowerCase();
-tt.value = DEFAULTS.to.toLowerCase();
-
 // Trigger icon updates and any UI change reactions
 tf.dispatchEvent(new Event("change"));
 tt.dispatchEvent(new Event("change"));
