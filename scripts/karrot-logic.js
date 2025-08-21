@@ -1,7 +1,9 @@
   // karrot-logic.js
 
-      document.addEventListener('DOMContentLoaded', async () => {
-  // 👇 Move all these inside the DOMContentLoaded callback, at the top
+let selectedAggregator = "PulseX"; // Default aggregator
+document.addEventListener("DOMContentLoaded", async () => {
+  // No need to redeclare selectedAggregator here
+});
   const tf = document.getElementById("tokenFrom");
   const tt = document.getElementById("tokenTo");
   const fromIcon = document.getElementById("fromIcon");
