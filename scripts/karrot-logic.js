@@ -272,8 +272,6 @@ img.src = meta.logo || "img/default-token.png";
 
   updateAllIcons();
 }
-
-
   // On aggregator change, update tokens list accordingly
   aggregatorSelect.addEventListener("change", (e) => {
     const agg = e.target.value;
