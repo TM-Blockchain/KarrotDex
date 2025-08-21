@@ -304,17 +304,14 @@ aggregatorSelect.value = "PulseX";
 // Populate tokens based on PulseX aggregator
 populateTokensForAggregator("PulseX");
 
-// Now set the default token values
-tf.value = "0x6b175474e89094c44da98b954eedeac495271d0f".toLowerCase(); // DAI (pDAI)
+// Set default token values: DAI (pDAI) and KARROT
+tf.value = "0x6b175474e89094c44da98b954eedeac495271d0f".toLowerCase(); // DAI
 tt.value = "0x6910076eee8f4b6ea251b7cca1052dd744fc04da".toLowerCase(); // KARROT
 
-// Update icons
+// Trigger icon updates and any UI change reactions
 tf.dispatchEvent(new Event("change"));
 tt.dispatchEvent(new Event("change"));
 updateAllIcons();
-
-  // Initialize tokens on load with default aggregator
-  populateTokensForAggregator(selectedAggregator);
 
   // Extend swap execution for new aggregators (placeholders)
   async function swap9mm(tokenIn, tokenOut, amount, userAddr) {
