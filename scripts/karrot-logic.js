@@ -8,14 +8,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const checkbox = document.getElementById("useCustomAddress");
   const customAddressInput = document.getElementById("customAddress");
   const swapBtn = document.getElementById("btnSwap");
-  const switchBtn = document.getElementById("switchTokens"); // Make sure you have this button in your HTML
+  const switchBtn = document.getElementById("switchTokens");
 
   const tokenLogos = {
     "0x6910076eee8f4b6ea251b7cca1052dd744fc04da": "img/karrot-hex.jpg", // KARROT
     "0x6b175474e89094c44da98b954eedeac495271d0f": "https://assets.coingecko.com/coins/images/9956/thumb/4943.png", // DAI
     "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png", // USDC
     "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643": "https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png?v=024", // MXDAI
-    "0x4fabb145d64652a948d72533023f6e7a623c7c53": "https://cryptologos.cc/logos/binance-usd-busd-logo.png?v=024"  // BUSD
+    "0x4fabb145d64652a948d72533023f6e7a623c7c53": "https://cryptologos.cc/logos/binance-usd-busd-logo.png?v=024" // BUSD
   };
 
   function updateIcon(sel, img) {
@@ -30,40 +30,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateIcon(tt, toIcon);
   }
 
-  // Token constants
   const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f";
   const KARROT = "0x6910076eee8f4b6ea251b7cca1052dd744fc04da";
   const USDC = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
   const MXDAI = "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643";
   const BUSD = "0x4fabb145d64652a948d72533023f6e7a623c7c53";
 
-  // FROM dropdown
-  [
-    { addr: KARROT, label: "KARROT", logo: tokenLogos[KARROT] },
-    { addr: DAI, label: "DAI", logo: tokenLogos[DAI] },
-    { addr: USDC, label: "USDC", logo: tokenLogos[USDC] },
-    { addr: MXDAI, label: "MXDAI", logo: tokenLogos[MXDAI] },
-    { addr: BUSD, label: "BUSD", logo: tokenLogos[BUSD] },
-  ].forEach(({ addr, label, logo }) => {
+  // FROM options
+  [KARROT, DAI, USDC, MXDAI, BUSD].forEach(addr => {
     const option = document.createElement("option");
     option.value = addr;
-    option.textContent = label;
-    option.dataset.logo = logo;
+    option.textContent = Object.entries(tokenLogos).find(([k]) => k.toLowerCase() === addr.toLowerCase())[0] === addr ? addr : addr;
+    option.dataset.logo = tokenLogos[addr];
     tf.appendChild(option);
   });
 
-  // TO dropdown
-  [
-    { addr: KARROT, label: "KARROT", logo: tokenLogos[KARROT] },
-    { addr: MXDAI, label: "MXDAI", logo: tokenLogos[MXDAI] },
-    { addr: BUSD, label: "BUSD", logo: tokenLogos[BUSD] },
-    { addr: DAI, label: "DAI", logo: tokenLogos[DAI] },
-    { addr: USDC, label: "USDC", logo: tokenLogos[USDC] },
-  ].forEach(({ addr, label, logo }) => {
+  // TO options
+  [KARROT, MXDAI, BUSD, DAI, USDC].forEach(addr => {
     const option = document.createElement("option");
     option.value = addr;
-    option.textContent = label;
-    option.dataset.logo = logo;
+    option.textContent = Object.entries(tokenLogos).find(([k]) => k.toLowerCase() === addr.toLowerCase())[0] === addr ? addr : addr;
+    option.dataset.logo = tokenLogos[addr];
     tt.appendChild(option);
   });
 
@@ -92,12 +79,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // 🔁 Swap the tokenFrom and tokenTo values and update logos
   if (switchBtn) {
     switchBtn.addEventListener("click", () => {
-      const tempVal = tf.value;
+      const temp = tf.value;
       tf.value = tt.value;
-      tt.value = tempVal;
+      tt.value = temp;
       tf.dispatchEvent(new Event("change"));
       tt.dispatchEvent(new Event("change"));
     });
@@ -132,33 +118,63 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else {
     alert("Please install MetaMask!");
     swapBtn.disabled = true;
+    return;
   }
 
   const karrot = new ethers.Contract(AGG, karrotABI, signer);
 
-  async function swapRay() {
-    // implement ray swap logic
+  // Aggregator Selector
+  let selectedAggregator = "ZK"; // default
+
+  window.setAggregator = (agg) => {
+    selectedAggregator = agg;
+    console.log("Aggregator set to:", selectedAggregator);
+  };
+
+  async function swapRay(tokenIn, tokenOut, amount, userAddr) {
+    console.log("[RAY] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
+    // implement actual call to Ray protocol
   }
 
-  async function swapZK() {
-    // zk swap logic
+  async function swapZK(tokenIn, tokenOut, amount, userAddr) {
+    console.log("[ZK] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
+    // implement ZK swap logic here
   }
 
-  async function swapLiberty() {
-    // liberty swap logic
+  async function swapLiberty(tokenIn, tokenOut, amount, userAddr) {
+    console.log("[LIBERTY] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
+    // implement Liberty protocol swap logic
   }
 
-  swapBtn.addEventListener("click", () => {
+  async function executeSwap(tokenIn, tokenOut, amount, userAddr) {
+    switch (selectedAggregator) {
+      case "ZK":
+        return swapZK(tokenIn, tokenOut, amount, userAddr);
+      case "Ray":
+        return swapRay(tokenIn, tokenOut, amount, userAddr);
+      case "Liberty":
+        return swapLiberty(tokenIn, tokenOut, amount, userAddr);
+      default:
+        alert("Unknown aggregator selected");
+        throw new Error("Unknown aggregator");
+    }
+  }
+
+  swapBtn.addEventListener("click", async () => {
     const tokenIn = tf.value;
     const tokenOut = tt.value;
     const amt = document.getElementById("amountFrom").value;
-    const custom = checkbox.checked ? document.getElementById("customAddress").value : account;
+    const userAddr = checkbox.checked ? document.getElementById("customAddress").value : account;
 
     if (!amt || isNaN(amt) || Number(amt) <= 0) {
       return alert("Enter valid amount");
     }
 
-    console.log("Swapping:", amt, tokenIn, "→", tokenOut, "to:", custom);
-    alert(`Swap ${amt} from ${tokenIn} to ${tokenOut}`);
+    try {
+      await executeSwap(tokenIn, tokenOut, amt, userAddr);
+    } catch (err) {
+      console.error("Swap failed:", err);
+      alert("Swap failed. See console.");
+    }
   });
 });
