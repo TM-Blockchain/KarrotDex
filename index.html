@@ -38,7 +38,7 @@
       position: absolute;
       inset: 0;
       background-image: url('img/stake-karrot-bg.png');
-      background-size: contain;
+      background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
       opacity: 0.15;
@@ -177,12 +177,13 @@
     const fromSelect = document.getElementById("fromToken");
     const toSelect = document.getElementById("toToken");
 
+    // Populate token options
     window.addEventListener("load", () => {
       for (const [address, data] of Object.entries(tokenData)) {
-        const optFrom = new Option(data.name, address);
-        const optTo = new Option(data.name, address);
-        fromSelect.appendChild(optFrom);
-        toSelect.appendChild(optTo);
+        const opt1 = new Option(data.name, address);
+        const opt2 = new Option(data.name, address);
+        fromSelect.appendChild(opt1);
+        toSelect.appendChild(opt2);
       }
     });
 
@@ -203,5 +204,6 @@
       input.classList.toggle("hidden", !e.target.checked);
     });
   </script>
+
 </body>
 </html>
