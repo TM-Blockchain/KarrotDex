@@ -4,6 +4,40 @@ document.addEventListener('DOMContentLoaded', async () => {
   const tokenFrom = document.getElementById("tokenFrom");
   const tokenTo = document.getElementById("tokenTo");
 
+  window.addEventListener("load", async () => {
+  const tokenLogos = {
+    "0x6910076Eee8F4b6ea251B7cCa1052dd744Fc04DA": "img/karrot-hex.jpg", // KARROT
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": "https://assets.coingecko.com/coins/images/9956/thumb/4943.png", // DAI
+    "0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png", // USDC
+    // Add more tokens here as needed
+  };
+
+  function updateTokenIcon(selectId, imgId) {
+    const selectEl = document.getElementById(selectId);
+    const imgEl = document.getElementById(imgId);
+    const selectedToken = selectEl.value.toLowerCase();
+
+    if (tokenLogos[selectedToken]) {
+      imgEl.src = tokenLogos[selectedToken];
+    } else {
+      imgEl.src = "img/default-token.png";
+    }
+  }
+
+  // Initial load for both selects
+  updateTokenIcon("tokenFrom", "fromIcon");
+  updateTokenIcon("tokenTo", "toIcon");
+
+  // Watch for changes in token selects
+  document.getElementById("tokenFrom").addEventListener("change", () => {
+    updateTokenIcon("tokenFrom", "fromIcon");
+  });
+
+  document.getElementById("tokenTo").addEventListener("change", () => {
+    updateTokenIcon("tokenTo", "toIcon");
+  });
+});
+
   // Fetch token list from CoinGecko
   const response = await fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=true");
   const tokens = await response.json();
