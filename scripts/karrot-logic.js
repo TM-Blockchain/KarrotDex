@@ -1,33 +1,33 @@
 // karrot-logic.js
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // ✅ Set default aggregator after everything is defined
-  selectedAggregator = "PulseX";
-  aggregatorSelect.value = "PulseX";
-  populateTokensForAggregator("PulseX");
-
-  if (DEFAULTS["PulseX"]) {
-    tf.value = DEFAULTS["PulseX"].from.toLowerCase();
-    tt.value = DEFAULTS["PulseX"].to.toLowerCase();
-  }
-
-  tf.dispatchEvent(new Event("change"));
-  tt.dispatchEvent(new Event("change"));
-  updateAllIcons();
+    ;
 });
-
   const tf = document.getElementById("tokenFrom");
   const tt = document.getElementById("tokenTo");
   const fromIcon = document.getElementById("fromIcon");
   const toIcon = document.getElementById("toIcon");
-
+  const checkbox = document.getElementById("useCustomAddress");
+  const customAddressInput = document.getElementById("customAddress");
+  const swapBtn = document.getElementById("btnSwap");
+  const switchBtn = document.getElementById("switchTokens");
+  const aggregatorSelect = document.getElementById("aggregator");
+  const tokenLogos = {
+      document.addEventListener('DOMContentLoaded', async () => {
+  // 👇 Move all these inside the DOMContentLoaded callback, at the top
+  const tf = document.getElementById("tokenFrom");
+  const tt = document.getElementById("tokenTo");
+  const fromIcon = document.getElementById("fromIcon");
+  const toIcon = document.getElementById("toIcon");
   const checkbox = document.getElementById("useCustomAddress");
   const customAddressInput = document.getElementById("customAddress");
   const swapBtn = document.getElementById("btnSwap");
   const switchBtn = document.getElementById("switchTokens");
   const aggregatorSelect = document.getElementById("aggregator");
 
-  const tokenLogos = {
+  // Your remaining logic...
+});
+
     "0x6910076eee8f4b6ea251b7cca1052dd744fc04da": "img/karrot-hex.jpg", // KARROT
     "0x6b175474e89094c44da98b954eedeac495271d0f": "https://assets.coingecko.com/coins/images/9956/thumb/4943.png", // DAI
     "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png", // USDC
