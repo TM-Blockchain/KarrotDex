@@ -272,8 +272,8 @@ img.src = meta.logo || "img/default-token.png";
     console.log(`Switched aggregator to: ${agg}`);
     populateTokensForAggregator(agg);
   });
-  function populateSelect(selectEl, order) {
-  order.forEach(addr => {
+  function populateSelectWithLabels(selectEl, addresses) {
+  addresses.forEach(addr => {
     const option = document.createElement("option");
     option.value = addr.toLowerCase();
     option.textContent = labelMap[addr] || addr;
@@ -281,7 +281,6 @@ img.src = meta.logo || "img/default-token.png";
     selectEl.appendChild(option);
   });
 }
-
 // Helper to manually trigger icon update
 function updateAllIcons() {
   updateIcon(tf, fromIcon);
