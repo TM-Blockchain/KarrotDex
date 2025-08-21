@@ -306,19 +306,6 @@ function updateAllIcons() {
   updateIcon(tf, fromIcon);
   updateIcon(tt, toIcon);
 }
-// Set default aggregator to PulseX
-selectedAggregator = "PulseX";
-aggregatorSelect.value = "PulseX";
-populateTokensForAggregator("PulseX");
-
-if (DEFAULTS["PulseX"]) {
-  tf.value = DEFAULTS["PulseX"].from.toLowerCase();
-  tt.value = DEFAULTS["PulseX"].to.toLowerCase();
-}
-
-tf.dispatchEvent(new Event("change"));
-tt.dispatchEvent(new Event("change"));
-updateAllIcons();
 
   // Extend swap execution for new aggregators (placeholders)
   async function swap9mm(tokenIn, tokenOut, amount, userAddr) {
