@@ -1,18 +1,5 @@
-// karrot-logic.js
+  // karrot-logic.js
 
-document.addEventListener('DOMContentLoaded', async () => {
-    ;
-});
-  const tf = document.getElementById("tokenFrom");
-  const tt = document.getElementById("tokenTo");
-  const fromIcon = document.getElementById("fromIcon");
-  const toIcon = document.getElementById("toIcon");
-  const checkbox = document.getElementById("useCustomAddress");
-  const customAddressInput = document.getElementById("customAddress");
-  const swapBtn = document.getElementById("btnSwap");
-  const switchBtn = document.getElementById("switchTokens");
-  const aggregatorSelect = document.getElementById("aggregator");
-  const tokenLogos = {
       document.addEventListener('DOMContentLoaded', async () => {
   // 👇 Move all these inside the DOMContentLoaded callback, at the top
   const tf = document.getElementById("tokenFrom");
@@ -26,6 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const aggregatorSelect = document.getElementById("aggregator");
 
   // Your remaining logic...
+  let selectedAggregator = "PulseX"; // Declare only once, globally
+
 });
 
     "0x6910076eee8f4b6ea251b7cca1052dd744fc04da": "img/karrot-hex.jpg", // KARROT
