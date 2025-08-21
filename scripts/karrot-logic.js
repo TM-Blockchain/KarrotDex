@@ -239,10 +239,11 @@ img.src = meta.logo || "img/default-token.png";
 
   // Helper function to populate tokens dropdown based on selected aggregator
   function populateTokensForAggregator(aggregator) {
-  console.log("populateTokensForAggregator called for:", aggregator); // ✅ ADD THIS
+  console.log("populateTokensForAggregator called for:", aggregator); // ✅ Log
+
   const tokenList = aggregatorTokens[aggregator];
   if (!tokenList) {
-    console.warn("No tokens for:", aggregator); // ✅ ADD THIS
+    console.warn("No tokens for:", aggregator); // ✅ Warn if empty
     return;
   }
 
@@ -250,33 +251,28 @@ img.src = meta.logo || "img/default-token.png";
   tf.innerHTML = "";
   tt.innerHTML = "";
 
-    const tokenList = aggregatorTokens[aggregator];
-    if (!tokenList) return;
+  // Populate both selects with tokens
+  tokenList.forEach(({ address, label, logo }) => {
+    const optionFrom = document.createElement("option");
+    optionFrom.value = address.toLowerCase();
+    optionFrom.textContent = label;
+    optionFrom.dataset.logo = logo;
+    tf.appendChild(optionFrom);
 
-    // Clear existing options
-    tf.innerHTML = "";
-    tt.innerHTML = "";
+    const optionTo = document.createElement("option");
+    optionTo.value = address.toLowerCase();
+    optionTo.textContent = label;
+    optionTo.dataset.logo = logo;
+    tt.appendChild(optionTo);
+  });
 
-    tokenList.forEach(({ address, label, logo }) => {
-      const optionFrom = document.createElement("option");
-      optionFrom.value = address.toLowerCase();
-      optionFrom.textContent = label;
-      optionFrom.dataset.logo = logo;
-      tf.appendChild(optionFrom);
+  // Set default selections
+  tf.selectedIndex = 0;
+  tt.selectedIndex = tokenList.length > 1 ? 1 : 0;
 
-      const optionTo = document.createElement("option");
-      optionTo.value = address.toLowerCase();
-      optionTo.textContent = label;
-      optionTo.dataset.logo = logo;
-      tt.appendChild(optionTo);
-    });
+  updateAllIcons();
+}
 
-    // Set defaults (first token for from, second or first for to)
-    tf.selectedIndex = 0;
-    tt.selectedIndex = tokenList.length > 1 ? 1 : 0;
-
-    updateAllIcons();
-  }
 
   // On aggregator change, update tokens list accordingly
   aggregatorSelect.addEventListener("change", (e) => {
