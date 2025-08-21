@@ -11,3 +11,30 @@ aggregatorSelect.addEventListener("change", (e) => {
   localStorage.setItem("selectedAggregator", agg);
   populateTokensForAggregator(agg);
 });
+
+
+You mentioned localStorage earlier. It’s not currently used, but if you plan to persist the selected aggregator or recent swaps:
+
+Here’s where and how you could use it:
+
+a. Save selected aggregator:
+aggregatorSelect.addEventListener("change", (e) => {
+  const agg = e.target.value;
+  selectedAggregator = agg;
+  localStorage.setItem("selectedAggregator", agg); // 🔐 Save selection
+  populateTokensForAggregator(agg);
+});
+
+b. Load saved aggregator on startup:
+
+Right after DOMContentLoaded:
+
+const savedAgg = localStorage.getItem("selectedAggregator");
+if (savedAgg && aggregatorTokens[savedAgg]) {
+  selectedAggregator = savedAgg;
+  aggregatorSelect.value = savedAgg;
+  populateTokensForAggregator(savedAgg);
+}
+
+
+That way, when the user reloads the page, their previous selection stays.
