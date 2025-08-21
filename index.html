@@ -5,22 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🥕 KarrotDex</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  select {
-  background-color: transparent;
-  color: #FF7F11;
-  border: 1px solid #FF7F11;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
+  
+  <style>
+    /* Dropdown styling */
+    select {
+      background-color: transparent;
+      color: #FF7F11;
+      border: 1px solid #FF7F11;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
 
-select option {
-  background-color: #1e1e1e;
-  color: #FF7F11;
-}
-<style>
+    select option {
+      background-color: #1e1e1e;
+      color: #FF7F11;
+    }
+
     body {
       font-family: 'Arial', sans-serif;
       background-color: #0a0a0a;
@@ -60,7 +63,6 @@ select option {
       z-index: -1;
     }
 
-    /* Token icons */
     .token-icon {
       width: 24px;
       height: 24px;
@@ -68,7 +70,6 @@ select option {
       margin-right: 0.5rem;
     }
 
-    /* Karrot colors */
     .text-karrot-orange {
       color: #FF7F11;
     }
@@ -89,19 +90,16 @@ select option {
       background-color: #ffc462;
     }
 
-    /* Tabs */
     .tab-active {
       background-color: #FF7F11;
       color: white;
       box-shadow: 0 0 10px #FF7F11;
     }
 
-    /* Buttons */
     button {
       transition: background-color 0.3s ease;
     }
 
-    /* Container backgrounds */
     .card-bg {
       background-color: rgba(255, 127, 17, 0.15);
       border-radius: 1rem;
@@ -111,7 +109,6 @@ select option {
       margin-top: 1rem;
     }
 
-    /* Input */
     input, select {
       background-color: #1e1e1e;
       color: #fff;
@@ -127,7 +124,6 @@ select option {
       color: #bbb;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 768px) {
       .token-section {
         flex-direction: column;
@@ -165,25 +161,23 @@ select option {
         <div class="flex items-center bg-gray-900 p-3 rounded">
           <img id="fromIcon" class="token-icon" src="img/default-token.png" alt="From Token" />
           <select id="tokenFrom" class="bg-transparent flex-1 outline-none"></select>
-
         </div>
         <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceFrom">Balance: 0.00</div>
       </div>
 
-      
-    <!-- To Token -->
-<div class="mb-4">
-  <label class="block text-sm text-karrot-yellow mb-1">To</label>
-  <div class="flex items-center bg-gray-900 p-3 rounded">
-    <img id="toIcon" class="token-icon" src="img/karrot-hex.jpg" alt="Karrot Token" />
-    <select id="tokenTo" class="bg-transparent flex-1 outline-none">
-      <option value="0x6910076Eee8F4b6ea251B7cCa1052dd744Fc04DA" selected>KARROT</option>
-      <option value="0x6B175474E89094C44Da98b954EedeAC495271d0F">DAI</option>
-      <option value="0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48">USDC</option>
-    </select>
-  </div>
-  <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceTo">Balance: 0.00</div>
-</div>
+      <!-- To Token -->
+      <div class="mb-4">
+        <label class="block text-sm text-karrot-yellow mb-1">To</label>
+        <div class="flex items-center bg-gray-900 p-3 rounded">
+          <img id="toIcon" class="token-icon" src="img/karrot-hex.jpg" alt="Karrot Token" />
+          <select id="tokenTo" class="bg-transparent flex-1 outline-none">
+            <option value="0x6910076Eee8F4b6ea251B7cCa1052dd744Fc04DA" selected>KARROT</option>
+            <option value="0x6B175474E89094C44Da98b954EedeAC495271d0F">DAI</option>
+            <option value="0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48">USDC</option>
+          </select>
+        </div>
+        <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceTo">Balance: 0.00</div>
+      </div>
 
       <!-- Amount -->
       <div class="mb-4">
