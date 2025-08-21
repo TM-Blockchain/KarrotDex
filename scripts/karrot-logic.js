@@ -281,6 +281,37 @@ img.src = meta.logo || "img/default-token.png";
     console.log(`Switched aggregator to: ${agg}`);
     populateTokensForAggregator(agg);
   });
+  function populateSelect(selectEl, order) {
+  order.forEach(addr => {
+    const option = document.createElement("option");
+    option.value = addr.toLowerCase();
+    option.textContent = labelMap[addr] || addr;
+    option.dataset.logo = tokenLogos[addr];
+    selectEl.appendChild(option);
+  });
+}
+
+// Helper to manually trigger icon update
+function updateAllIcons() {
+  updateIcon(tf, fromIcon);
+  updateIcon(tt, toIcon);
+}
+
+// Set default aggregator to PulseX
+selectedAggregator = "PulseX";
+aggregatorSelect.value = "PulseX";
+
+// Populate tokens based on PulseX aggregator
+populateTokensForAggregator("PulseX");
+
+// Now set the default token values
+tf.value = "0x6b175474e89094c44da98b954eedeac495271d0f".toLowerCase(); // DAI (pDAI)
+tt.value = "0x6910076eee8f4b6ea251b7cca1052dd744fc04da".toLowerCase(); // KARROT
+
+// Update icons
+tf.dispatchEvent(new Event("change"));
+tt.dispatchEvent(new Event("change"));
+updateAllIcons();
 
   // Initialize tokens on load with default aggregator
   populateTokensForAggregator(selectedAggregator);
