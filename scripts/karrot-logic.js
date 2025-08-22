@@ -1,16 +1,9 @@
   // karrot-logic.js
 
 let selectedAggregator = "PulseX"; // Default aggregator
-document.addEventListener("DOMContentLoaded", async () => {
-  // All initialization code goes here...
-  
-  const tf = document.getElementById("tokenFrom");
-  const tt = document.getElementById("tokenTo");
-  
 
-});
-  
-});
+document.addEventListener("DOMContentLoaded", async () => {
+  // Grab all DOM elements
   const tf = document.getElementById("tokenFrom");
   const tt = document.getElementById("tokenTo");
   const fromIcon = document.getElementById("fromIcon");
@@ -20,9 +13,57 @@ document.addEventListener("DOMContentLoaded", async () => {
   const swapBtn = document.getElementById("btnSwap");
   const switchBtn = document.getElementById("switchTokens");
   const aggregatorSelect = document.getElementById("aggregator"); 
+
+  // Make sure elements exist
+  if (!tf || !tt || !aggregatorSelect) {
+    console.error("Missing essential DOM elements.");
+    return;
+  }
+
+  // Initial token population
   populateTokensForAggregator(selectedAggregator);
+
+  // Trigger change events to update icons
   tf.dispatchEvent(new Event("change"));
   tt.dispatchEvent(new Event("change"));
+
+  // Optionally set event listeners here too
+  aggregatorSelect.addEventListener("change", (e) => {
+    selectedAggregator = e.target.value;
+    populateTokensForAggregator(selectedAggregator);
+    tf.dispatchEvent(new Event("change"));
+    tt.dispatchEvent(new Event("change"));
+  });
+
+  tf.addEventListener("change", () => {
+    updateIcon(tf, fromIcon);
+    if (tf.value === tt.value) {
+      tt.selectedIndex = (tt.selectedIndex + 1) % tt.options.length;
+      updateIcon(tt, toIcon);
+    }
+  });
+
+  tt.addEventListener("change", () => {
+    updateIcon(tt, toIcon);
+    if (tt.value === tf.value) {
+      tf.selectedIndex = (tf.selectedIndex + 1) % tf.options.length;
+      updateIcon(tf, fromIcon);
+    }
+  });
+
+  if (checkbox && customAddressInput) {
+    checkbox.addEventListener("change", () => {
+      customAddressInput.classList.toggle("hidden", !checkbox.checked);
+    });
+  }
+
+  if (swapBtn) {
+    swapBtn.addEventListener("click", async () => {
+      // Your swap logic here...
+    });
+  }
+
+});
 
 
 });
