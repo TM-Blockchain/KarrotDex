@@ -110,4 +110,18 @@ async function executeSwap(tokenIn, tokenOut, amount, userAddr) {
     case "Uniswap":
       return swapUniswap(tokenIn, tokenOut, amount, userAddr);
     case "PancakeSwap":
+    case "PancakeSwap":
+      return swapPancakeSwap(tokenIn, tokenOut, amount, userAddr);
+    case "CowSwap":
+      return swapCowSwap(tokenIn, tokenOut, amount, userAddr);
+    case "1inch":
+      return swap1inch(tokenIn, tokenOut, amount, userAddr);
+    case "Matcha":
+      return swapMatcha(tokenIn, tokenOut, amount, userAddr);
+    case "ThorSwap":
+      return swapThorSwap(tokenIn, tokenOut, amount, userAddr);
+    default:
+      throw new Error("Unknown aggregator: " + selectedAggregator);
+  }
+}
 
