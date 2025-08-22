@@ -123,7 +123,7 @@ async function executeSwap(tokenIn, tokenOut, amount, userAddr) {
     default:
       async function swapPulseX(tokenIn, tokenOut, amount, userAddr) {
   console.log("Swapping on PulseX:", { tokenIn, tokenOut, amount, userAddr });
-  // TODO: Add actual PulseX swap logic
+  return swapPulseX(tokenIn, tokenOut, amount, userAddr);
 }
 
 async function swapRay(tokenIn, tokenOut, amount, userAddr) {
