@@ -121,6 +121,61 @@ async function executeSwap(tokenIn, tokenOut, amount, userAddr) {
     case "ThorSwap":
       return swapThorSwap(tokenIn, tokenOut, amount, userAddr);
     default:
+      async function swapPulseX(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on PulseX:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add actual PulseX swap logic
+}
+
+async function swapRay(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on Ray:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add actual Ray swap logic
+}
+
+async function swapZK(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on ZK:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add actual ZK swap logic
+}
+
+async function swap9mm(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on 9mm:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add actual 9mm swap logic
+}
+
+async function swapPiteas(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on Piteas:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add actual Piteas swap logic
+}
+
+async function swapUniswap(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on Uniswap:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add Uniswap SDK / router call
+}
+
+async function swapPancakeSwap(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on PancakeSwap:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add PancakeSwap API or router logic
+}
+
+async function swapCowSwap(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on CowSwap:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add CowSwap API call
+}
+
+async function swap1inch(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on 1inch:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add 1inch API logic
+}
+
+async function swapMatcha(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on Matcha:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add Matcha (0x) swap logic
+}
+
+async function swapThorSwap(tokenIn, tokenOut, amount, userAddr) {
+  console.log("Swapping on ThorSwap:", { tokenIn, tokenOut, amount, userAddr });
+  // TODO: Add ThorChain logic
+}
+
       throw new Error("Unknown aggregator: " + selectedAggregator);
   }
 }
