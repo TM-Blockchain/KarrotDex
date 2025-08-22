@@ -1,9 +1,27 @@
-  // karrot-logic.js
+// karrot-logic.js
 
 let selectedAggregator = "PulseX"; // Default aggregator
 
+// Token logo mapping
+const tokenLogos = {
+  "0x6910076eee8f4b6ea251b7cca1052dd744fc04da": "img/karrot-hex.jpg", // KARROT
+  "0x6b175474e89094c44da98b954eedeac495271d0f": "https://assets.coingecko.com/coins/images/9956/thumb/4943.png", // DAI
+  "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png", // USDC
+  "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643": "https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png?v=024", // MXDAI
+  "0x4fabb145d64652a948d72533023f6e7a623c7c53": "https://cryptologos.cc/logos/binance-usd-busd-logo.png?v=024"  // BUSD
+};
+
+// Label mapping
+const labelMap = {
+  "0x6910076eee8f4b6ea251b7cca1052dd744fc04da": "KARROT",
+  "0x6b175474e89094c44da98b954eedeac495271d0f": "DAI",
+  "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "USDC",
+  "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643": "MXDAI",
+  "0x4fabb145d64652a948d72533023f6e7a623c7c53": "BUSD"
+};
+
 document.addEventListener("DOMContentLoaded", async () => {
-  // Grab all DOM elements
+  // DOM Elements
   const tf = document.getElementById("tokenFrom");
   const tt = document.getElementById("tokenTo");
   const fromIcon = document.getElementById("fromIcon");
@@ -14,23 +32,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   const switchBtn = document.getElementById("switchTokens");
   const aggregatorSelect = document.getElementById("aggregator"); 
 
-  // Make sure elements exist
   if (!tf || !tt || !aggregatorSelect) {
     console.error("Missing essential DOM elements.");
     return;
   }
 
-  // Initial token population
+  // Inject token options
   populateTokensForAggregator(selectedAggregator);
-
-  // Trigger change events to update icons
   tf.dispatchEvent(new Event("change"));
   tt.dispatchEvent(new Event("change"));
 
-  // Optionally set event listeners here too
   aggregatorSelect.addEventListener("change", (e) => {
     selectedAggregator = e.target.value;
     populateTokensForAggregator(selectedAggregator);
+
+    if (DEFAULTS[selectedAggregator]) {
+      tf.value = DEFAULTS[selectedAggregator].from.toLowerCase();
+      tt.value = DEFAULTS[selectedAggregator].to.toLowerCase();
+    } else {
+      tf.selectedIndex = 0;
+      tt.selectedIndex = 1;
+    }
+
     tf.dispatchEvent(new Event("change"));
     tt.dispatchEvent(new Event("change"));
   });
@@ -57,150 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  if (swapBtn) {
-    swapBtn.addEventListener("click", async () => {
-      // Your swap logic here...
-    });
-  }
-
-});
-
-
-});
-
-    "0x6910076eee8f4b6ea251b7cca1052dd744fc04da": "img/karrot-hex.jpg", // KARROT
-    "0x6b175474e89094c44da98b954eedeac495271d0f": "https://assets.coingecko.com/coins/images/9956/thumb/4943.png", // DAI
-    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png", // USDC
-    "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643": "https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png?v=024", // MXDAI
-    "0x4fabb145d64652a948d72533023f6e7a623c7c53": "https://cryptologos.cc/logos/binance-usd-busd-logo.png?v=024"  // BUSD
-  };
-
-  const labelMap = {
-    "0x6910076eee8f4b6ea251b7cca1052dd744fc04da": "KARROT",
-    "0x6b175474e89094c44da98b954eedeac495271d0f": "DAI",
-    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "USDC",
-    "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643": "MXDAI",
-    "0x4fabb145d64652a948d72533023f6e7a623c7c53": "BUSD"
-  };
-
-function updateIcon(sel, img) {
-  const val = sel.value.toLowerCase();
-  const meta = {
-    logo: tokenLogos[val] || "img/default-token.png",
-    label: labelMap[val] || val
-  };
-  img.src = meta.logo;
-}
-
-  const tokens = Object.keys(tokenLogos);
-
-  // Populate FROM and TO dropdowns
-  function populateSelect(selectEl, order) {
-    order.forEach(addr => {
-      const option = document.createElement("option");
-      option.value = addr;
-      option.textContent = labelMap[addr] || addr;
-      option.dataset.logo = tokenLogos[addr];
-      selectEl.appendChild(option);
-    });
-  }
-
-  tf.addEventListener("change", () => {
-    updateIcon(tf, fromIcon);
-    if (tf.value === tt.value) {
-      const idx = (tt.selectedIndex + 1) % tt.options.length;
-      tt.selectedIndex = idx;
-      updateIcon(tt, toIcon);
-    }
-  });
-
-  tt.addEventListener("change", () => {
-    updateIcon(tt, toIcon);
-    if (tt.value === tf.value) {
-      const idx = (tf.selectedIndex + 1) % tf.options.length;
-      tf.selectedIndex = idx;
-      updateIcon(tf, fromIcon);
-    }
-  });
-
-  if (swapBtn) {
-  swapBtn.addEventListener("click", async () => {
-    const tokenIn = tf.value;
-    const tokenOut = tt.value;
-    const amt = document.getElementById("amountFrom").value;
-    
-    // ✅ Decide the recipient address
-    const userAddr = checkbox.checked ? document.getElementById("customAddress").value.trim() : account;
-
-    // ✅ Validate that an address is available
-    if (!userAddr) {
-      return alert("Wallet not connected and no custom address provided.");
-    }
-
-    if (!amt || isNaN(amt) || Number(amt) <= 0) {
-      return alert("Enter a valid amount");
-    }
-
-    const btnText = document.getElementById("swapBtnText");
-    const spinner = document.getElementById("swapSpinner");
-
-    swapBtn.disabled = true;
-    btnText.textContent = "Swapping...";
-    spinner.classList.remove("hidden");
-
-    try {
-      console.log(`Executing swap via ${selectedAggregator}`);
-      await executeSwap(tokenIn, tokenOut, amt, userAddr);
-      alert("Swap successful!");
-      document.getElementById("amountFrom").value = "";
-    } catch (err) {
-      console.error("Swap failed:", err);
-      alert("Swap failed. Check the console.");
-    } finally {
-      swapBtn.disabled = false;
-      btnText.textContent = "Swap";
-      spinner.classList.add("hidden");
-    }
-  });
-}
-
-
-    if (!amt || isNaN(amt) || Number(amt) <= 0) {
-      return alert("Enter a valid amount");
-    }
-
-    const btnText = document.getElementById("swapBtnText");
-    const spinner = document.getElementById("swapSpinner");
-
-    swapBtn.disabled = true;
-    btnText.textContent = "Swapping...";
-    spinner.classList.remove("hidden");
-
-    try {
-      console.log(`Executing swap via ${selectedAggregator}`);
-      await executeSwap(tokenIn, tokenOut, amt, userAddr);
-      alert("Swap successful!");
-      document.getElementById("amountFrom").value = "";
-    } catch (err) {
-      console.error("Swap failed:", err);
-      alert("Swap failed. Check the console.");
-    } finally {
-      swapBtn.disabled = false;
-      btnText.textContent = "Swap";
-      spinner.classList.add("hidden");
-    }
-  });
-}
-
-
-
-  if (checkbox && customAddressInput) {
-    checkbox.addEventListener("change", () => {
-      customAddressInput.classList.toggle("hidden", !checkbox.checked);
-    });
-  }
-
-  const AGG = "0xYourKarrotAggregator"; // Update with actual aggregator address
+  const AGG = "0xYourKarrotAggregator"; // Replace with your aggregator address
   const karrotABI = [
     {
       constant: true,
@@ -228,90 +108,95 @@ function updateIcon(sel, img) {
 
   const karrot = new ethers.Contract(AGG, karrotABI, signer);
 
-  
-  selectedAggregator = "ZK";
+  if (swapBtn) {
+    swapBtn.addEventListener("click", async () => {
+      const tokenIn = tf.value;
+      const tokenOut = tt.value;
+      const amt = document.getElementById("amountFrom").value;
+      const userAddr = checkbox.checked ? customAddressInput.value.trim() : account;
+
+      if (!userAddr) {
+        return alert("Wallet not connected and no custom address provided.");
+      }
+
+      if (!amt || isNaN(amt) || Number(amt) <= 0) {
+        return alert("Enter a valid amount");
+      }
+
+      const btnText = document.getElementById("swapBtnText");
+      const spinner = document.getElementById("swapSpinner");
+
+      swapBtn.disabled = true;
+      btnText.textContent = "Swapping...";
+      spinner.classList.remove("hidden");
+
+      try {
+        console.log(`Executing swap via ${selectedAggregator}`);
+        await executeSwap(tokenIn, tokenOut, amt, userAddr);
+        alert("Swap successful!");
+        document.getElementById("amountFrom").value = "";
+      } catch (err) {
+        console.error("Swap failed:", err);
+        alert("Swap failed. Check the console.");
+      } finally {
+        swapBtn.disabled = false;
+        btnText.textContent = "Swap";
+        spinner.classList.add("hidden");
+      }
+    });
+  }
 
   window.setAggregator = (agg) => {
     selectedAggregator = agg;
     console.log("Aggregator set to:", selectedAggregator);
   };
+});
 
-  async function swapRay(tokenIn, tokenOut, amount, userAddr) {
-    console.log("[RAY] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
-    // Implement actual Ray swap logic here
-  }
+// -----------------------------
+// Utilities and Functions
+// -----------------------------
 
-  async function swapZK(tokenIn, tokenOut, amount, userAddr) {
-    console.log("[ZK] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
-    // Implement actual ZK swap logic here
-  }
+function updateIcon(sel, img) {
+  const val = sel.value.toLowerCase();
+  img.src = tokenLogos[val] || "img/default-token.png";
+}
 
-  async function swapLiberty(tokenIn, tokenOut, amount, userAddr) {
-    console.log("[LIBERTY] Swapping", amount, tokenIn, "→", tokenOut, "for", userAddr);
-    // Implement actual Liberty swap logic here
-  }
+function updateAllIcons() {
+  updateIcon(document.getElementById("tokenFrom"), document.getElementById("fromIcon"));
+  updateIcon(document.getElementById("tokenTo"), document.getElementById("toIcon"));
+}
 
-    // *************** ADDITIONS START HERE ***************
+function populateTokensForAggregator(aggregator) {
+  const tf = document.getElementById("tokenFrom");
+  const tt = document.getElementById("tokenTo");
 
-  // Aggregator-specific token lists, including new DEX aggregators and local PulseChain tokens
-  const aggregatorTokens = {
-    ZK: [
-      { address: "0x6910076eee8f4b6ea251b7cca1052dd744fc04da", label: "KARROT", logo: "img/karrot-hex.jpg" },
-      { address: "0x6b175474e89094c44da98b954eedeac495271d0f", label: "DAI", logo: "https://assets.coingecko.com/coins/images/9956/thumb/4943.png" },
-      { address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", label: "USDC", logo: "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png" },
-    ],
-    Ray: [
-      { address: "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643", label: "MXDAI", logo: "https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png?v=024" },
-      { address: "0x4fabb145d64652a948d72533023f6e7a623c7c53", label: "BUSD", logo: "https://cryptologos.cc/logos/binance-usd-busd-logo.png?v=024" },
-      // Add more tokens specific to Ray here
-    ],
-    Liberty: [
-      // Liberty tokens (placeholder, update when live)
-      { address: "0x1111111111111111111111111111111111111111", label: "LIBTOK1", logo: "img/liberty1.png" },
-      { address: "0x2222222222222222222222222222222222222222", label: "LIBTOK2", logo: "img/liberty2.png" }
-    ],
+  const tokenList = aggregatorTokens[aggregator];
+  if (!tokenList) return;
 
-    // Newly added aggregators with their tokens
-    "9mm": [
-      { address: "0xTokenAddress1", label: "9MMToken1", logo: "img/9mm1.png" },
-      { address: "0xTokenAddress2", label: "9MMToken2", logo: "img/9mm2.png" }
-    ],
-    Piteas: [
-      { address: "0xPiteasToken1", label: "PiteasToken1", logo: "img/piteas1.png" }
-      // Add more Piteas tokens
-    ],
-    PulseX: [
-      { address: "0xPulseXToken1", label: "PulseXToken1", logo: "img/pulsex1.png" }
-      // Add more PulseX tokens
-    ],
-    Uniswap: [
-      { address: "0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", label: "USDC", logo: "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png" },
-      { address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", label: "WETH", logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png" }
-      // Add more Uniswap tokens
-    ],
-    PancakeSwap: [
-      { address: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82", label: "CAKE", logo: "https://cryptologos.cc/logos/pancakeswap-cake-logo.png" }
-      // Add more PancakeSwap tokens
-    ],
-    CowSwap: [
-      { address: "0xTokenCow1", label: "CowToken1", logo: "img/cow1.png" }
-      // Add more CowSwap tokens
-    ],
-    "1inch": [
-      { address: "0xToken1inch1", label: "1inchToken1", logo: "img/1inch1.png" }
-      // Add more 1inch tokens
-    ],
-    Matcha: [
-      { address: "0xTokenMatcha1", label: "MatchaToken1", logo: "img/matcha1.png" }
-      // Add more Matcha tokens
-    ],
-    ThorSwap: [
-      { address: "0xXStockToken1", label: "XStockToken1", logo: "img/thorswap1.png" }
-      // Add more ThorSwap tokens
-    ]
-  }; 
+  tf.innerHTML = "";
+  tt.innerHTML = "";
 
-  const DEFAULTS = {
+  tokenList.forEach(({ address, label, logo }) => {
+    const optionFrom = document.createElement("option");
+    optionFrom.value = address.toLowerCase();
+    optionFrom.textContent = label;
+    optionFrom.dataset.logo = logo;
+    tf.appendChild(optionFrom);
+
+    const optionTo = document.createElement("option");
+    optionTo.value = address.toLowerCase();
+    optionTo.textContent = label;
+    optionTo.dataset.logo = logo;
+    tt.appendChild(optionTo);
+  });
+
+  tf.selectedIndex = 0;
+  tt.selectedIndex = tokenList.length > 1 ? 1 : 0;
+
+  updateAllIcons();
+}
+
+const DEFAULTS = {
   PulseX: {
     from: "0x6b175474e89094c44da98b954eedeac495271d0f",
     to: "0x6910076eee8f4b6ea251b7cca1052dd744fc04da"
