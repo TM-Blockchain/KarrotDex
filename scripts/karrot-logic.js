@@ -175,6 +175,49 @@ async function swapThorSwap(tokenIn, tokenOut, amount, userAddr) {
   console.log("Swapping on ThorSwap:", { tokenIn, tokenOut, amount, userAddr });
   // TODO: Add ThorChain logic
 }
+const PULSE_X_ROUTER = "0x165C3410fC91EF562C50559f7d2289fEbed552d9";
+const routerAbi = [
+  "function swapExactTokensForTokens(uint256 amountIn, uint256 amountOutMin, address[] calldata path, address to, uint256 deadline) external returns (uint256[] memory amounts)",
+];
+
+async function swapPulseX(tokenIn, tokenOut, amount, userAddr) {
+  const { ethers } = window;
+  if (!window.ethereum) throw new Error("No wallet");
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+
+  const router = new ethers.Contract(PULSE_X_ROUTER, routerAbi, signer);
+
+  const amountIn = ethers.utils.parseUnits(amount.toString(), 18);
+  const slippagePct = 0.005;
+  const amountOutMin = amountIn.mul((1 - slippagePct) * 1000).div(1000);
+
+  const path = [tokenIn, tokenOut];
+  const deadline = Math.floor(Date.now() / 1000) + 60 * 10;
+
+  try {
+    // Approve token if necessary
+    const erc20Abi = ["function approve(address spender, uint256 amount) external returns (bool)"];
+    const tokenContract = new ethers.Contract(tokenIn, erc20Abi, signer);
+    await tokenContract.approve(PULSE_X_ROUTER, amountIn);
+
+    const tx = await router.swapExactTokensForTokens(
+      amountIn,
+      amountOutMin,
+      path,
+      userAddr,
+      deadline
+    );
+
+    console.log("PulseX TX submitted:", tx.hash);
+    await tx.wait();
+    console.log("PulseX swap completed");
+  } catch (err) {
+    console.error("PulseX swap error:", err);
+    throw err;
+  }
+}
 
       throw new Error("Unknown aggregator: " + selectedAggregator);
   }
