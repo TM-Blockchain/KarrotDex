@@ -12,8 +12,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const customAddressInput = document.getElementById("customAddress");
   const swapBtn = document.getElementById("btnSwap");
   const switchBtn = document.getElementById("switchTokens");
-  const aggregatorSelect = document.getElementById("aggregator");
+  const aggregatorSelect = document.getElementById("aggregator"); 
   populateTokensForAggregator(selectedAggregator);
+  tf.dispatchEvent(new Event("change"));
+  tt.dispatchEvent(new Event("change"));
 
 
 });
