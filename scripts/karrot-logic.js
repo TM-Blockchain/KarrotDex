@@ -109,4 +109,110 @@
         .join('');
       state.selectedAggregator = aggregatorSelect.value;
 
-      fu
+            function populateTokens() {
+        const list = aggregatorTokens[state.selectedAggregator] || [];
+        tf.innerHTML = '';
+        tt.innerHTML = '';
+
+        list.forEach(token => {
+          const opt1 = new Option(token.label, token.address.toLowerCase());
+          const opt2 = new Option(token.label, token.address.toLowerCase());
+          tf.appendChild(opt1);
+          tt.appendChild(opt2);
+        });
+
+        const defaults = DEFAULTS[state.selectedAggregator];
+        if (defaults) {
+          tf.value = defaults.from.toLowerCase();
+          tt.value = defaults.to.toLowerCase();
+        } else {
+          tf.selectedIndex = 0;
+          tt.selectedIndex = tf.options.length > 1 ? 1 : 0;
+        }
+
+        updateIcons();
+      }
+
+      function updateIcon(select, icon) {
+        const addr = select.value.toLowerCase();
+        const token = (aggregatorTokens[state.selectedAggregator] || []).find(t => t.address.toLowerCase() === addr);
+        icon.src = token?.logo || 'img/default-token.png';
+      }
+
+      function updateIcons() {
+        updateIcon(tf, fromIcon);
+        updateIcon(tt, toIcon);
+      }
+
+      function shortAddr(addr) {
+        return addr.slice(0, 6) + '...' + addr.slice(-4);
+      }
+
+      connectBtn.addEventListener('click', async () => {
+        if (!window.ethereum) {
+          alert("MetaMask not found.");
+          return;
+        }
+
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          state.walletConnected = true;
+          state.userAddress = accounts[0];
+          connectBtn.textContent = shortAddr(state.userAddress);
+        } catch (err) {
+          console.error("Wallet connection error", err);
+        }
+      });
+
+      switchBtn.addEventListener('click', () => {
+        const temp = tf.value;
+        tf.value = tt.value;
+        tt.value = temp;
+        updateIcons();
+      });
+
+      aggregatorSelect.addEventListener('change', () => {
+        state.selectedAggregator = aggregatorSelect.value;
+        populateTokens();
+      });
+
+      tf.addEventListener('change', () => updateIcon(tf, fromIcon));
+      tt.addEventListener('change', () => updateIcon(tt, toIcon));
+
+      useCustomAddress.addEventListener('change', () => {
+        customAddress.classList.toggle('hidden', !useCustomAddress.checked);
+      });
+
+      swapBtn.addEventListener('click', () => {
+        if (!state.walletConnected) {
+          alert("Connect wallet first.");
+          return;
+        }
+
+        const from = tf.value;
+        const to = tt.value;
+        const amount = document.getElementById('amountFrom').value;
+        const dest = useCustomAddress.checked ? customAddress.value.trim() : state.userAddress;
+
+        if (!from || !to || !amount || !dest) {
+          alert("Fill all fields.");
+          return;
+        }
+
+        swapBtnText.textContent = "Swapping...";
+        swapSpinner.classList.remove("hidden");
+        swapBtn.disabled = true;
+
+        setTimeout(() => {
+          alert(`Swapped ${amount} from ${shortAddr(from)} → ${shortAddr(to)}\nSent to: ${shortAddr(dest)}`);
+          swapBtnText.textContent = "Swap";
+          swapSpinner.classList.add("hidden");
+          swapBtn.disabled = false;
+        }, 2000);
+      });
+
+      // Initial run
+      populateTokens();
+    });
+  </script>
+
