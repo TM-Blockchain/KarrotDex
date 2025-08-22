@@ -80,7 +80,6 @@ function updateIcon(sel, img) {
     const tokenIn = tf.value;
     const tokenOut = tt.value;
     const amt = document.getElementById("amountFrom").value;
-    const userAddr = checkbox.checked ? document.getElementById("customAddress").value : account;
 
     if (!amt || isNaN(amt) || Number(amt) <= 0) {
       return alert("Enter a valid amount");
