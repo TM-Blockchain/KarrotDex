@@ -228,8 +228,8 @@ function updateIcon(sel, img) {
 
   const karrot = new ethers.Contract(AGG, karrotABI, signer);
 
-  // Aggregator control
-  let selectedAggregator = "ZK";
+  
+  selectedAggregator = "ZK";
 
   window.setAggregator = (agg) => {
     selectedAggregator = agg;
