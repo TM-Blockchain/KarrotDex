@@ -80,6 +80,42 @@ function updateIcon(sel, img) {
     const tokenIn = tf.value;
     const tokenOut = tt.value;
     const amt = document.getElementById("amountFrom").value;
+    
+    // ✅ Decide the recipient address
+    const userAddr = checkbox.checked ? document.getElementById("customAddress").value.trim() : account;
+
+    // ✅ Validate that an address is available
+    if (!userAddr) {
+      return alert("Wallet not connected and no custom address provided.");
+    }
+
+    if (!amt || isNaN(amt) || Number(amt) <= 0) {
+      return alert("Enter a valid amount");
+    }
+
+    const btnText = document.getElementById("swapBtnText");
+    const spinner = document.getElementById("swapSpinner");
+
+    swapBtn.disabled = true;
+    btnText.textContent = "Swapping...";
+    spinner.classList.remove("hidden");
+
+    try {
+      console.log(`Executing swap via ${selectedAggregator}`);
+      await executeSwap(tokenIn, tokenOut, amt, userAddr);
+      alert("Swap successful!");
+      document.getElementById("amountFrom").value = "";
+    } catch (err) {
+      console.error("Swap failed:", err);
+      alert("Swap failed. Check the console.");
+    } finally {
+      swapBtn.disabled = false;
+      btnText.textContent = "Swap";
+      spinner.classList.add("hidden");
+    }
+  });
+}
+
 
     if (!amt || isNaN(amt) || Number(amt) <= 0) {
       return alert("Enter a valid amount");
