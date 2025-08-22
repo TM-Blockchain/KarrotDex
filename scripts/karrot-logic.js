@@ -2,7 +2,14 @@
 
 let selectedAggregator = "PulseX"; // Default aggregator
 document.addEventListener("DOMContentLoaded", async () => {
-  // No need to redeclare selectedAggregator here
+  // All initialization code goes here...
+  
+  const tf = document.getElementById("tokenFrom");
+  const tt = document.getElementById("tokenTo");
+  
+
+});
+  
 });
   const tf = document.getElementById("tokenFrom");
   const tt = document.getElementById("tokenTo");
