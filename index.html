@@ -96,7 +96,12 @@
 
   <!-- Amount -->
   <div class="mb-4">
-    <label class="block text-sm text-karrot-yellow mb-1">Amount</label>
+    <label for="customAddress" class="inline-flex items-center space-x-2 text-sm text-karrot-yellow mb-1">
+  <input type="checkbox" id="useCustomAddress" name="useCustomAddress" class="form-checkbox text-karrot-orange" />
+  <span>Send to different address</span>
+</label>
+<input type="text" id="customAddress" name="customAddress" class="hidden mt-2 w-full bg-gray-900 p-2 rounded" placeholder="0xWallet..." />
+
     <input type="text" id="amountFrom" name="amountFrom" placeholder="0.0" />
   </div>
 
