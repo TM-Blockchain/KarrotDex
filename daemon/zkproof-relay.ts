@@ -1,51 +1,59 @@
 // daemon/zkproof-relay.ts
 
+import dotenv from "dotenv";
+dotenv.config();
+
 import { ethers } from "ethers";
 import { parseLockEvent } from "../lib/parseLockEvent";
 import { generateOrFetchProof } from "../lib/generateProof";
 
-// Setup RPC and contracts
-const pulseProvider = new ethers.providers.JsonRpcProvider(process.env.PULSE_RPC);
+// Setup RPC and minter contract
+const provider = new ethers.providers.JsonRpcProvider(process.env.PULSE_RPC);
 const minter = new ethers.Contract(
   process.env.MINTER_ADDRESS!,
   [ "function mintFromLockProof(string, address, uint256, bytes)" ],
-  new ethers.Wallet(process.env.PRIVATE_KEY!, pulseProvider)
+  new ethers.Wallet(process.env.PRIVATE_KEY!, provider)
 );
 
 const seenProofs = new Set<string>();
 
-export async function startZkProofRelay() {
-  console.log("🌀 ZK Proof Relay Started...");
+async function main() {
+  console.log("🌀 zkProof Relay Bootstrapping...");
 
-  // Example: Read logs from an event stream or queue
-  // Replace with your actual event source
-  const eventSource = getZkProofEventStream();
+  const eventStream = getZkProofEventStream(); // ⬅️ Your event source (queue, logs, etc.)
 
-  for await (const logs of eventSource) {
+  for await (const logs of eventStream) {
     try {
       const proof = generateOrFetchProof(logs);
       const proofHash = ethers.utils.keccak256(proof);
-
       if (seenProofs.has(proofHash)) continue;
       seenProofs.add(proofHash);
 
       const { user, symbol, amount } = parseLockEvent(logs);
 
-      console.log(`Relaying zkProof: minting ${symbol} to ${user}, amount: ${amount}`);
+      console.log(`Relaying: Mint ${symbol} → ${user} for ${amount}`);
       const tx = await minter.mintFromLockProof(symbol, user, amount, proof);
       await tx.wait();
 
-      console.log(`✅ Mint TX: ${tx.hash}`);
+      console.log(`✅ Minted. TX: ${tx.hash}`);
     } catch (err) {
-      console.error("❌ ZK Relay Error:", err);
+      console.error("❌ zkProof Relay Error:", err);
     }
   }
 }
 
-// Mock of zk event source — replace with your real stream
+// Mock async stream — replace with real zk queue or proof emitter
 async function* getZkProofEventStream() {
   while (true) {
-    await new Promise(res => setTimeout(res, 5000));
-    yield { /* mocked zk logs */ };
+    await new Promise((r) => setTimeout(r, 5000)); // 5s poll
+    yield {
+      event: "MockAssetLocked",
+      data: { user: "0x...", symbol: "pxTOKEN", amount: "1.0" }
+    };
   }
 }
+
+main().catch((err) => {
+  console.error("💥 zkProof Relay Failed:", err);
+  process.exit(1);
+});
