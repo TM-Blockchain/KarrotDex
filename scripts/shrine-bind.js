@@ -2,7 +2,7 @@
 import { initOracleEcho } from "./oracle-echo.js";
 
 const AGGREGATOR_ADDRESS = "0xYourAggregator";
-const AGGREGATOR_ABI = const AGGREGATOR_ABI = [
+const AGGREGATOR_ABI = [
   { 
     "inputs": [
       { "internalType": "string", "name": "venue", "type": "string" },
