@@ -8,7 +8,7 @@ export const aggregatorTokens = {
       logo: 'img/dai.png'
     },
     {
-      address: '0x6910e486b5649Ff8C0C2Dd501173EBe5f6D7E98e', // KARROT
+      address: '0x6910076Eee8F4b6ea251B7cCa1052dd744Fc04DA', // KARROT
       label: 'KARROT',
       logo: 'img/karrot-hex.jpg'
     }
