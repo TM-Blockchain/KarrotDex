@@ -4,7 +4,8 @@ import { state } from '../state.js';
 import { aggregatorTokenMap, aggregatorDefaults } from '../tokenMap.js';
 
 // Populate dropdowns with tokens for the selected aggregator
-  export function populateTokens() {
+ 
+export function populateTokens() {
   console.log('Populating tokens for:', state.selectedAggregator); 
   console.log('Tokens:', aggregatorTokenMap[state.selectedAggregator]);
 
