@@ -1,6 +1,10 @@
 import { Connection, PublicKey } from "@solana/web3.js";
 import { ethers } from "ethers";
 import fs from "fs";
+export async function startSolanaBridgeDaemon() {
+ 
+  // ... all daemon logic from previous code
+}
 
 // ----- Solana Setup -----
 const SOL_RPC = process.env.SOL_RPC!;
