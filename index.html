@@ -71,10 +71,14 @@
       <!-- From Token -->
       <div class="mb-4">
   <label class="block text-sm text-karrot-yellow mb-1">To</label>
-  <div class="flex items-center bg-gray-900 p-3 rounded">
-    <img id="toIcon" class="token-icon" src="img/default-token.png" alt="To Token" />
-    <select id="tokenTo" class="bg-transparent flex-1 outline-none text-white"></select>
-  </div>
+  <div class="mb-4">
+        <label class="block text-sm text-karrot-yellow mb-1">From</label>
+        <div class="flex items-center bg-gray-900 p-3 rounded">
+          <img id="fromIcon" class="token-icon" src="img/default-token.png" alt="From Token" />
+          <select id="tokenFrom" class="bg-transparent flex-1 outline-none"></select>
+        </div>
+        <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceFrom">Balance: 0.00</div>
+      </div>
   <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceTo">Balance: 0.00</div>
 </div>
         <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceFrom">Balance: 0.00</div>
