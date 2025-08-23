@@ -6,8 +6,6 @@ export const aggregatorTokenMap = {
       address: "0x6b175474e89094c44da98b954eedeac495271d0f",
       label: "DAI",
       logo: "img/dai.png"
-      fromIcon.src = tokenMap[from].logo;
-
     },
     {
       address: "0x6910076eee8f4b6ea251b7cca1052dd744fc04da",
@@ -28,6 +26,7 @@ export const aggregatorTokenMap = {
     }
   ]
 };
+
 
 export const aggregatorDefaults = {
   PulseX: {
