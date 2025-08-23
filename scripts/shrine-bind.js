@@ -2,13 +2,55 @@
 import { initOracleEcho } from "./oracle-echo.js";
 
 const AGGREGATOR_ADDRESS = "0xYourAggregator";
-const AGGREGATOR_ABI = [
-  { "inputs":[{"internalType":"string","name":"venue","type":"string"},{"internalType":"address","name":"tokenIn","type":"address"},{"internalType":"address","name":"tokenOut","type":"address"},{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"minOut","type":"uint256"},{"internalType":"address[]","name":"path","type":"address[]"},{"internalType":"uint256","name":"deadline","type":"uint256"}],
-    "name":"swapV2","outputs":[{"internalType":"uint256","name":"amountOut","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},
-  { "inputs":[{"internalType":"string","name":"venue","type":"string"},{"internalType":"address","name":"tokenIn","type":"address"},{"internalType":"address","name":"tokenOut","type":"address"},{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"minOut","type":"uint256"},{"internalType":"uint24","name":"fee","type":"uint24"},{"internalType":"uint256","name":"deadline","type":"uint256"}],
-    "name":"swapV3","outputs":[{"internalType":"uint256","name":"amountOut","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},
-  { "inputs":[{"internalType":"address","name":"tokenIn","type":"address"},{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"string","name":"targetChain","type":"string"},{"internalType":"string","name":"memo","type":"string"}],
-    "name":"requestThorSwap","outputs":[{"internalType":"bytes32","name":"requestId","type":"bytes32"}],"stateMutability":"nonpayable","type":"function"}
+const AGGREGATOR_ABI = const AGGREGATOR_ABI = [
+  { 
+    "inputs": [
+      { "internalType": "string", "name": "venue", "type": "string" },
+      { "internalType": "address", "name": "tokenIn", "type": "address" },
+      { "internalType": "address", "name": "tokenOut", "type": "address" },
+      { "internalType": "uint256", "name": "amountIn", "type": "uint256" },
+      { "internalType": "uint256", "name": "minOut", "type": "uint256" },
+      { "internalType": "address[]", "name": "path", "type": "address[]" },
+      { "internalType": "uint256", "name": "deadline", "type": "uint256" }
+    ],
+    "name": "swapV2",
+    "outputs": [
+      { "internalType": "uint256", "name": "amountOut", "type": "uint256" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { 
+    "inputs": [
+      { "internalType": "string", "name": "venue", "type": "string" },
+      { "internalType": "address", "name": "tokenIn", "type": "address" },
+      { "internalType": "address", "name": "tokenOut", "type": "address" },
+      { "internalType": "uint256", "name": "amountIn", "type": "uint256" },
+      { "internalType": "uint256", "name": "minOut", "type": "uint256" },
+      { "internalType": "uint24", "name": "fee", "type": "uint24" },
+      { "internalType": "uint256", "name": "deadline", "type": "uint256" }
+    ],
+    "name": "swapV3",
+    "outputs": [
+      { "internalType": "uint256", "name": "amountOut", "type": "uint256" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { 
+    "inputs": [
+      { "internalType": "address", "name": "tokenIn", "type": "address" },
+      { "internalType": "uint256", "name": "amountIn", "type": "uint256" },
+      { "internalType": "string", "name": "targetChain", "type": "string" },
+      { "internalType": "string", "name": "memo", "type": "string" }
+    ],
+    "name": "requestThorSwap",
+    "outputs": [
+      { "internalType": "bytes32", "name": "requestId", "type": "bytes32" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
 ];
 
 let web3, accounts, agg;
