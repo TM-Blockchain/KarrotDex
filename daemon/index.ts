@@ -6,6 +6,12 @@ dotenv.config();
 import { startSolanaBridgeDaemon } from "./solana-bridge-daemon";
 
 async function main() {
+  await startSolanaBridgeDaemon();
+}
+
+main().catch(console.error);
+
+async function main() {
   console.log("🥕 KarrotDex Daemon Bootstrap");
   console.log("🔄 Initializing Solana ↔ PulseChain Bridge...");
 
