@@ -22,10 +22,9 @@ export function initHandlers() {
 
   // Aggregator change
   aggregatorSelect.addEventListener('change', () => {
-    state.selectedAggregator = aggregatorSelect.value;
-    setAggregator(state.selectedAggregator);
-    populateTokens(); // From tokenUI.js
-  });
+  state.selectedAggregator = aggregatorSelect.value;
+  populateTokens();
+});
 
   // Switch from/to tokens
   switchBtn.addEventListener('click', () => {
