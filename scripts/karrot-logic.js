@@ -1,5 +1,3 @@
-// karrot-logic.js
-
 import { swapPulseX } from './aggregators/pulsex.js';
 import { swapRay } from './aggregators/ray.js';
 import { swapZK } from './aggregators/zk.js';
@@ -11,7 +9,7 @@ import { swapCowSwap } from './aggregators/cowswap.js';
 import { swap1inch } from './aggregators/oneinch.js';
 import { swapMatcha } from './aggregators/matcha.js';
 import { swapThorSwap } from './aggregators/thorswap.js';
-import { getLibertySwapQuote } from './aggregators/libertyswap.js'; // API-based
+import { getLibertySwapQuote } from './aggregators/libertyswap.js';
 
 // Default aggregator
 let selectedAggregator = "PulseX";
@@ -62,19 +60,15 @@ export async function executeSwap(tokenIn, tokenOut, amount, userAddr) {
 }
 
 // 🔁 Update Token Icons Safely
-export function updateIcons() {
-  const fromMeta = aggregatorTokens[selectedAggregator].find(t => t.address === tokenFrom.value);
-  const toMeta = aggregatorTokens[selectedAggregator].find(t => t.address === tokenTo.value);
+export function updateIcons(aggregatorTokens, tokenFrom, tokenTo, fromIcon, toIcon) {
+  const tokens = aggregatorTokens[selectedAggregator] || [];
+
+  const fromMeta = tokens.find(t => t.address === tokenFrom.value);
+  const toMeta = tokens.find(t => t.address === tokenTo.value);
 
   fromIcon.src = fromMeta?.logo || "img/default-token.png";
   toIcon.src = toMeta?.logo || "img/default-token.png";
 
-  // Fallback for broken image paths
   fromIcon.onerror = () => { fromIcon.src = "img/default-token.png"; };
   toIcon.onerror = () => { toIcon.src = "img/default-token.png"; };
-} 
-
-
-  // Fallback on load error
-  fromIcon.onerror = () => { fromIcon.src = "img/default-token.png"; };
-  toIcon.onerror = () => { toIcon.src = "img/default-token.png"; };
+}
