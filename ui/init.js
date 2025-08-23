@@ -2,6 +2,14 @@
 import { aggregatorTokens, DEFAULTS } from '../tokens/index.js';
 import { updateIcons } from './icons.js';
 import { state } from '../state.js';
+import { populateTokens, updateIcons } from './tokenUI.js';
+
+// Example usage inside DOMContentLoaded
+populateTokens(tokenFromSelect, tokenToSelect, fromIcon, toIcon);
+
+// Hook into change events
+tokenFromSelect.addEventListener('change', () => updateIcons(tokenFromSelect, tokenToSelect, fromIcon, toIcon));
+tokenToSelect.addEventListener('change', () => updateIcons(tokenFromSelect, tokenToSelect, fromIcon, toIcon));
 
 export function initAggregatorDropdown(aggregatorSelect) {
   aggregatorSelect.innerHTML = Object.keys(aggregatorTokens)
