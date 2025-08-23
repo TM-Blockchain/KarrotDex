@@ -10,6 +10,7 @@ import { swap1inch } from './aggregators/oneinch.js';
 import { swapMatcha } from './aggregators/matcha.js';
 import { swapThorSwap } from './aggregators/thorswap.js';
 import { getLibertySwapQuote } from './aggregators/libertyswap.js';
+import { aggregatorTokenMap } from './tokenMap.js';
 
 // Default aggregator
 let selectedAggregator = "PulseX";
