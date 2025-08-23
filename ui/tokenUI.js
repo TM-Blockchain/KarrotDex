@@ -5,8 +5,8 @@ import { aggregatorTokenMap, aggregatorDefaults } from '../tokenMap.js';
 
 // Populate dropdowns with tokens for the selected aggregator
 export function populateTokens() {
-  const tf = document.getElementById('tokenFrom');
-  const tt = document.getElementById('tokenTo');
+  console.log('Populating tokens for:', state.selectedAggregator); 
+  console.log('Tokens:', aggregatorTokenMap[state.selectedAggregator]);
 
   // Clear existing options
   tf.innerHTML = '';
