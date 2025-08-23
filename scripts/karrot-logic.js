@@ -62,7 +62,7 @@ export async function executeSwap(tokenIn, tokenOut, amount, userAddr) {
 }
 
 // 🔁 Update Token Icons Safely
-export function function updateIcons() {
+export function updateIcons() {
   const fromMeta = aggregatorTokens[selectedAggregator].find(t => t.address === tokenFrom.value);
   const toMeta = aggregatorTokens[selectedAggregator].find(t => t.address === tokenTo.value);
 
