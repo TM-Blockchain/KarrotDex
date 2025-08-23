@@ -62,12 +62,18 @@ export async function executeSwap(tokenIn, tokenOut, amount, userAddr) {
 }
 
 // 🔁 Update Token Icons Safely
-export function updateIcons(tokenFrom, tokenTo, fromIcon, toIcon, aggregatorTokens) {
+export function function updateIcons() {
   const fromMeta = aggregatorTokens[selectedAggregator].find(t => t.address === tokenFrom.value);
   const toMeta = aggregatorTokens[selectedAggregator].find(t => t.address === tokenTo.value);
 
   fromIcon.src = fromMeta?.logo || "img/default-token.png";
   toIcon.src = toMeta?.logo || "img/default-token.png";
+
+  // Fallback for broken image paths
+  fromIcon.onerror = () => { fromIcon.src = "img/default-token.png"; };
+  toIcon.onerror = () => { toIcon.src = "img/default-token.png"; };
+}
+
 
   // Fallback on load error
   fromIcon.onerror = () => { fromIcon.src = "img/default-token.png"; };
