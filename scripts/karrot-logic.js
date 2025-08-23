@@ -78,4 +78,3 @@ export function updateIcons() {
   // Fallback on load error
   fromIcon.onerror = () => { fromIcon.src = "img/default-token.png"; };
   toIcon.onerror = () => { toIcon.src = "img/default-token.png"; };
-}
