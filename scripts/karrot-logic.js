@@ -1,3 +1,5 @@
+// karrot-logic.js
+
 import { swapPulseX } from './aggregators/pulsex.js';
 import { swapRay } from './aggregators/ray.js';
 import { swapZK } from './aggregators/zk.js';
