@@ -1,4 +1,4 @@
-<!-- At end of body -->
+gic/<!-- At end of body -->
 <script>
   const aggregatorTokens = {
     ZK: [{ address: '0x...', label: 'KARROT', logo: 'img/karrot-hex.jpg' }, /* more */],
