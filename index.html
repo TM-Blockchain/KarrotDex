@@ -93,17 +93,39 @@
     </div>
     <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceTo">Balance: 0.00</div>
   </div>
-
+<input type="text" id="amountFrom" name="amountFrom" placeholder="0.0" />
+  </div>
   <!-- Amount -->
   <div class="mb-4">
     <label for="customAddress" class="inline-flex items-center space-x-2 text-sm text-karrot-yellow mb-1">
   <input type="checkbox" id="useCustomAddress" name="useCustomAddress" class="form-checkbox text-karrot-orange" />
   <span>Send to different address</span>
 </label>
-<input type="text" id="customAddress" name="customAddress" class="hidden mt-2 w-full bg-gray-900 p-2 rounded" placeholder="0xWallet..." />
+<!-- 🔧 Advanced Options -->
+<div id="advancedSettings" class="mb-4">
+  <!-- Slippage Tolerance -->
+  <label for="slippage" class="block text-sm text-karrot-yellow mb-1">Slippage Tolerance (%)</label>
+  <input type="number" id="slippage" placeholder="0.5" min="0" max="50" step="0.1" />
 
-    <input type="text" id="amountFrom" name="amountFrom" placeholder="0.0" />
+  <!-- Cross-Chain Mode Toggle -->
+  <div class="mt-4">
+    <label class="inline-flex items-center space-x-2 text-sm text-karrot-yellow">
+      <input type="checkbox" id="useCrossChain" class="form-checkbox text-karrot-orange" />
+      <span>Enable Cross-Chain Mode</span>
+    </label>
   </div>
+
+  <!-- Cross-Chain PxAsset Selector (hidden until checkbox is checked) -->
+  <div id="pxAssetSection" class="hidden mt-4">
+    <label for="pxAsset" class="block text-sm text-karrot-yellow mb-1">Select PxAsset</label>
+    <select id="pxAsset" class="bg-gray-900 p-2 rounded w-full">
+      <option value="pxETH">pxETH</option>
+      <option value="pxDAI">pxDAI</option>
+      <option value="pxUSDC">pxUSDC</option>
+      <!-- Add more pxAssets here -->
+    </select>
+  </div>
+</div>
 
   <!-- Custom Address -->
   <div class="mb-4">
