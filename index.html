@@ -59,97 +59,71 @@
   </header>
 
   <!-- Aggregator + Swap Panel Container -->
-  <main class="flex flex-col items-center p-6 space-y-6">
+<main class="flex flex-col items-center p-6 space-y-6">
 
-    <!-- Aggregator Switcher -->
-    <div class="w-full max-w-md card-bg p-4">
-      <label for="aggregator" class="block mb-2 text-karrot-yellow font-semibold">Aggregator:</label>
-      <select id="aggregator" class="w-full"></select>
+  <!-- Aggregator Switcher -->
+  <div class="w-full max-w-md card-bg p-4">
+    <label for="aggregator" class="block mb-2 text-karrot-yellow font-semibold">Aggregator:</label>
+    <select id="aggregator" class="w-full"></select>
+  </div>
+
+<!-- Swap Panel -->
+<div class="w-full max-w-md card-bg shadow-2xl">
+  <!-- From Token -->
+  <div class="mb-4">
+    <label class="block text-sm text-karrot-yellow mb-1">From</label>
+    <div class="flex items-center bg-gray-900 p-3 rounded">
+      <img id="fromIcon" class="token-icon" src="img/default-token.png" alt="From Token" />
+      <select id="tokenFrom" class="bg-transparent flex-1 outline-none"></select>
     </div>
+    <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceFrom">Balance: 0.00</div>
+  </div>
 
-    <!-- Swap Panel -->
-    <div class="w-full max-w-md card-bg shadow-2xl">
-      <!-- From Token -->
-      <div class="mb-4">
-        <label class="block text-sm text-karrot-yellow mb-1">From</label>
-        <div class="flex items-center bg-gray-900 p-3 rounded">
-          <img id="fromIcon" class="token-icon" src="img/default-token.png" alt="From Token" />
-          <select id="tokenFrom" class="bg-transparent flex-1 outline-none"></select>
-        </div>
-        <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceFrom">Balance: 0.00</div>
-      </div>
+  <!-- Switch Tokens -->
+  <div class="flex justify-center mb-4">
+    <button id="switchTokens" class="text-karrot-orange text-2xl hover:text-white transition">⇅</button>
+  </div>
 
-      <!-- Switch Tokens -->
-      <div class="flex justify-center mb-4">
-        <button id="switchTokens" class="text-karrot-orange text-2xl hover:text-white transition">⇅</button>
-      </div>
-
-      <!-- To Token -->
-      <div class="mb-4">
-        <label class="block text-sm text-karrot-yellow mb-1">To</label>
-        <div class="flex items-center bg-gray-900 p-3 rounded">
-          <img id="toIcon" class="token-icon" src="img/default-token.png" alt="To Token" />
-          <select id="tokenTo" class="bg-transparent flex-1 outline-none"></select>
-        </div>
-        <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceTo">Balance: 0.00</div>
-      </div>
-
-      <input type="text" id="amountFrom" name="amountFrom" placeholder="0.0" />
+  <!-- To Token -->
+  <div class="mb-4">
+    <label class="block text-sm text-karrot-yellow mb-1">To</label>
+    <div class="flex items-center bg-gray-900 p-3 rounded">
+      <img id="toIcon" class="token-icon" src="img/default-token.png" alt="To Token" />
+      <select id="tokenTo" class="bg-transparent flex-1 outline-none"></select>
     </div>
+    <div class="text-xs mt-1 text-right text-karrot-yellow" id="balanceTo">Balance: 0.00</div>
+  </div>
 
-    <!-- Amount -->
-    <div class="mb-4">
-      <label for="customAddress" class="inline-flex items-center space-x-2 text-sm text-karrot-yellow mb-1">
-        <input type="checkbox" id="useCustomAddress" name="useCustomAddress" class="form-checkbox text-karrot-orange" />
-        <span>Send to different address</span>
-      </label>
+  <!-- Amount -->
+  <div class="mb-4">
+    <label for="customAddress" class="inline-flex items-center space-x-2 text-sm text-karrot-yellow mb-1">
+  <span>Send to different address</span>
+</label>
+<input type="text" id="customAddress" name="customAddress" class="hidden mt-2 w-full bg-gray-900 p-2 rounded" placeholder="0xWallet..." />
 
-      <!-- 🔧 Advanced Options -->
-      <div id="advancedSettings" class="mb-4">
-        <!-- Slippage Tolerance -->
-        <label for="slippage" class="block text-sm text-karrot-yellow mb-1">Slippage Tolerance (%)</label>
-        <input type="number" id="slippage" placeholder="0.5" min="0" max="50" step="0.1" />
+    <input type="text" id="amountFrom" name="amountFrom" placeholder="0.0" />
+  </div>
 
-        <!-- Cross-Chain Mode Toggle -->
-        <div class="mt-4">
-          <label class="inline-flex items-center space-x-2 text-sm text-karrot-yellow">
-            <input type="checkbox" id="useCrossChain" class="form-checkbox text-karrot-orange" />
-            <span>Enable Cross-Chain Mode</span>
-          </label>
-        </div>
+  <!-- Custom Address -->
+  <div class="mb-4">
+    <label class="inline-flex items-center space-x-2 text-sm text-karrot-yellow">
+      <input type="checkbox" id="useCustomAddress" class="form-checkbox text-karrot-orange" />
+      <span>Send to different address</span>
+    </label>
+    <input type="text" id="customAddress" class="hidden mt-2 w-full bg-gray-900 p-2 rounded" placeholder="0xWallet..." />
+  </div>
 
-        <!-- Cross-Chain PxAsset Selector (hidden until checkbox is checked) -->
-        <div id="pxAssetSection" class="hidden mt-4">
-          <label for="pxAsset" class="block text-sm text-karrot-yellow mb-1">Select PxAsset</label>
-          <select id="pxAsset" class="bg-gray-900 p-2 rounded w-full">
-            <option value="pxETH">pxETH</option>
-            <option value="pxDAI">pxDAI</option>
-            <option value="pxUSDC">pxUSDC</option>
-            <!-- Add more pxAssets here -->
-          </select>
-        </div>
-      </div>
+  <!-- Swap Button -->
+  <button id="btnSwap" class="w-full py-3 mt-4 bg-karrot-orange hover-karrot-orange rounded text-white font-semibold flex items-center justify-center">
+    <span id="swapBtnText">Swap</span>
+    <svg id="swapSpinner" class="hidden animate-spin h-5 w-5 ml-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+    </svg>
+  </button>
+</div>
 
-      <!-- Custom Address -->
-      <div class="mb-4">
-        <label class="inline-flex items-center space-x-2 text-sm text-karrot-yellow">
-          <input type="checkbox" id="useCustomAddress" class="form-checkbox text-karrot-orange" />
-          <span>Send to different address</span>
-        </label>
-        <input type="text" id="customAddress" class="hidden mt-2 w-full bg-gray-900 p-2 rounded" placeholder="0xWallet..." />
-      </div>
-
-      <!-- Swap Button -->
-      <button id="btnSwap" class="w-full py-3 mt-4 bg-karrot-orange hover-karrot-orange rounded text-white font-semibold flex items-center justify-center">
-        <span id="swapBtnText">Swap</span>
-        <svg id="swapSpinner" class="hidden animate-spin h-5 w-5 ml-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-        </svg>
-      </button>
-    </div>
-
-  </main>
+</main>
 
   <!-- External Lib -->
   <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
@@ -197,6 +171,7 @@
 
     // Initial setup
     window.addEventListener('DOMContentLoaded', populateTokens);
+    
   </script>
 </body>
 </html>
