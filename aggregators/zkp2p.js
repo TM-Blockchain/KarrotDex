@@ -8,8 +8,11 @@ const ZKP2P_ENDPOINT = 'https://api.zkp2p.io/v1/quote'; // 🔧 Replace with act
  */
 export async function swapZKP2P({ tokenIn, tokenOut, amount, recipient, slippage = 1, useCrossChain = false, pxAsset = null }) {
   try {
-    const decimals = tokenIn.decimals || 18;
-const formattedAmount = (parseFloat(amount) * Math.pow(10, decimals)).toString(); 
+    const fromToken = normalizeToken(tokenIn);
+const toToken = normalizeToken(tokenOut);
+const decimals = fromToken.decimals || 18;
+const formattedAmount = (parseFloat(amount) * Math.pow(10, decimals)).toString();
+ 
     
    const payload = {
       fromToken: tokenIn,
