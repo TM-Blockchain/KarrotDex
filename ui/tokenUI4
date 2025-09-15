@@ -1,0 +1,51 @@
+import { state } from '../state.js';
+import { aggregatorTokenMap, aggregatorDefaults } from '../tokenMap.js';
+
+// Populate token dropdowns
+export function populateTokens() {
+  const tf = document.getElementById('tokenFrom');
+  const tt = document.getElementById('tokenTo');
+  const fromIcon = document.getElementById('fromIcon');
+  const toIcon = document.getElementById('toIcon');
+
+  const list = aggregatorTokenMap[state.selectedAggregator] || [];
+
+  tf.innerHTML = '';
+  tt.innerHTML = '';
+
+  list.forEach(token => {
+    const opt1 = new Option(token.label, token.address.toLowerCase());
+    const opt2 = new Option(token.label, token.address.toLowerCase());
+    tf.appendChild(opt1);
+    tt.appendChild(opt2);
+  });
+
+  const defaults = aggregatorDefaults[state.selectedAggregator];
+  if (defaults) {
+    tf.value = defaults.from.toLowerCase();
+    tt.value = defaults.to.toLowerCase();
+  } else {
+    tf.selectedIndex = 0;
+    tt.selectedIndex = tf.options.length > 1 ? 1 : 0;
+  }
+
+  updateIcons();
+}
+
+// Update token logos
+export function updateIcons() {
+  const tf = document.getElementById('tokenFrom');
+  const tt = document.getElementById('tokenTo');
+  const fromIcon = document.getElementById('fromIcon');
+  const toIcon = document.getElementById('toIcon');
+
+  updateIcon(tf, fromIcon);
+  updateIcon(tt, toIcon);
+}
+
+function updateIcon(select, iconEl) {
+  const addr = select.value.toLowerCase();
+  const tokens = aggregatorTokenMap[state.selectedAggregator] || [];
+  const token = tokens.find(t => t.address.toLowerCase() === addr);
+  iconEl.src = token?.logo || 'img/default-token.png';
+}
