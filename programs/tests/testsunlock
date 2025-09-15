@@ -1,0 +1,49 @@
+import * as anchor from "@project-serum/anchor";
+import { Program } from "@project-serum/anchor";
+import { YourAnchorProgram } from "../target/types/your_anchor_program";
+import { getMerkleProof, hashLeaf } from "../client/merkleUtils";
+import { expect } from "chai";
+
+describe("unlock_with_merkle", () => {
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
+
+  const program = anchor.workspace.YourAnchorProgram as Program<YourAnchorProgram>;
+
+  const user = anchor.web3.Keypair.generate();
+  const vault = anchor.web3.Keypair.generate();
+  const mint = anchor.web3.Keypair.generate();
+  const amount = new anchor.BN(1_000_000_000);
+  const index = 0;
+
+  let leaves: Buffer[];
+
+  before(async () => {
+    // Mock 4 Merkle leaves
+    leaves = [
+      hashLeaf(user.publicKey, amount.toNumber(), 0),
+      hashLeaf(anchor.web3.Keypair.generate().publicKey, 2000, 1),
+      hashLeaf(anchor.web3.Keypair.generate().publicKey, 3000, 2),
+      hashLeaf(anchor.web3.Keypair.generate().publicKey, 4000, 3),
+    ];
+  });
+
+  it("should unlock with correct Merkle proof", async () => {
+    const leaf = hashLeaf(user.publicKey, amount.toNumber(), index);
+    const proof = getMerkleProof(leaves, index);
+
+    await program.methods
+      .unlockWithMerkle(leaf, proof, amount, new anchor.BN(index))
+      .accounts({
+        user: user.publicKey,
+        vault: vault.publicKey,
+        assetMint: mint.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([user])
+      .rpc();
+
+    // Validate token transfer, state update etc.
+    console.log("✅ Unlock succeeded");
+  });
+});
