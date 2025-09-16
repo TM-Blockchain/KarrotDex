@@ -1,0 +1,12 @@
+[User Locks RWA on Source Chain]
+        ↓
+[Proof submitted to KarrotEscrow]
+        ↓ emits →
+  🔁 AssetLocked(user, symbol, amount, proofHash)
+
+[Off-chain listener or bridge backend sees event]
+        ↓
+Calls pxAssetMinter.mintFromLockProof(symbol, user, amount, lockProof)
+
+        ↓
+Minted: pxTSLA, pxAAPL, etc. → tradable on Pulse DEX

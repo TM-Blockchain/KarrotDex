@@ -1,0 +1,3 @@
+"scripts": {
+  "zkrelay": "ts-node daemon/zkproof-relay.ts"
+}
